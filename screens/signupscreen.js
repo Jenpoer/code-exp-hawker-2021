@@ -31,7 +31,7 @@ export default function signupscreen({ navigation }) {
         .auth()
         .createUserWithEmailAndPassword(email, password);
       console.log(userCredential);
-      setErrorText(`Welcome ${userCredential.user.email}`);
+      setErrorText(`Sign up successful ${user}, head back to login page`);
     }
   }
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: "red",
+    color: "green",
     height: 40,
   },
   loginText: {
