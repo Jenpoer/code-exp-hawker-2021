@@ -62,27 +62,27 @@ const ShopListStack = createStackNavigator();
 
 export default function ShopListScreen({ route, navigation }) {
   const {id: hawkerId, title: hawkerName, address: hawkerAddress} = route.params
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("shop list", { id: user.id, email: user.email });
-      } else {
-        navigation.navigate("Login");
-      }
-    });
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={logout}>
-          <MaterialCommunityIconsname
-            name="logout"
-            size={24}
-            color="grey"
-            styles={{ marginRight: 20 }}
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigation.navigate("shop list", { id: user.id, email: user.email });
+  //     } else {
+  //       navigation.navigate("Login");
+  //     }
+  //   });
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <TouchableOpacity onPress={logout}>
+  //         <MaterialCommunityIconsname
+  //           name="logout"
+  //           size={24}
+  //           color="grey"
+  //           styles={{ marginRight: 20 }}
+  //         />
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, []);
 
   return (
     <ShopListStack.Navigator>

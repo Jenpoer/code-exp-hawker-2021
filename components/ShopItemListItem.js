@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "40%",
-    borderRadius: "10%",
+    borderRadius: 20,
     overflow: "hidden",
   },
   image: {
