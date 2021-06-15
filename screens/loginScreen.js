@@ -25,7 +25,7 @@ import React from "react";
        password
      );
      console.log(userCredential);
-     navigation.navigate("shop list", {email});
+     //navigation.navigate("Chat", {email});
      setErrorText(`Welcome ${userCredential.user.email}`);
    }
 
@@ -65,7 +65,7 @@ import React from "react";
    return (
      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View style={styles.container}>
-         <Text style={styles.title}>Login in</Text>
+         <Text style={styles.title}>Login</Text>
          <Text style={styles.fieldTitle}>Email</Text>
          <TextInput
            style={styles.input}
