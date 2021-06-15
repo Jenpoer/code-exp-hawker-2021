@@ -10,8 +10,11 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import ShopListScreen from "./screens/ShopListScreen";
 import signupscreen from "./screens/signupscreen";
+import ShopListScreen from "./screens/ShopListScreen";
+import ShopDetailsScreen from "./screens/ShopDetailsScreen";
+import loginScreen from "./screens/loginScreen";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -20,6 +23,22 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name = "Login" component={loginScreen} 
+        options={{
+          headerTitle: "LOGO",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 30,
+            textAlign: "center",
+            color: "white",
+          },
+          headerStyle: {
+            height: 120,
+            backgroundColor: "rgba(48, 64, 87, 1)",
+            borderBottomColor: "#ccc",
+            borderBottomWidth: 1,
+          },
+        }}/>
         <Stack.Screen name= "sign up page" component={signupscreen} 
         options={{
           headerTitle: "LOGO",
@@ -36,6 +55,9 @@ export default function App() {
             borderBottomWidth: 1,
           },
         }}/>
+        
+        <Stack.Screen name= "shop list" component={ShopListScreen} />
+        <Stack.Screen name= "shop Details" component={ShopDetailsScreen} />
       </Stack.Navigator>
       {/* {<Tab.Navigator
         screenOptions={({ route }) => ({

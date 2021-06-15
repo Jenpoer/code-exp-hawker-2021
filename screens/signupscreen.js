@@ -10,7 +10,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import firebase from "../database/firebase";
+//import firebase from "../database/firebase";
 
 
 //const db = firebase.firestore();
@@ -80,7 +80,7 @@ export default function signupscreen({navigation}){
          <Text style={styles.errorText}>{errorText}</Text>
          <Text 
           style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Login')}>
+          onPress={() => navigation.navigate('Login')}>
           Already Registered? Click here to login
         </Text>  
        </View>
