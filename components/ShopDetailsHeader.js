@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     alignItems: "stretch",
+    backgroundColor: "#304057"
   },
   image: {
     contentFit: "cover",

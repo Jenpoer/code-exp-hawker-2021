@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -52,43 +52,40 @@ function ShopList({ navigation }) {
 
 const ShopListStack = createStackNavigator();
 
-export default function ShopListScreen({navigation}) {
-  useEffect(()=> {
+export default function ShopListScreen({ navigation }) {
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-    if(user){
-        navigation.navigate("shop list",{id: user.id, email:user.email});
-    }else{
+      if (user) {
+        navigation.navigate("shop list", { id: user.id, email: user.email });
+      } else {
         navigation.navigate("Login");
-    }
-});
-// navigation.setOptions({
-//   headerRight: ()=> (
-//       <TouchableOpacity onPress={logout}>
-//           <MaterialCommunityIconsname 
-//           name="logout"
-//           size={24}
-//           color="grey"
-//           styles={{marginRight: 20}}/>
-//       </TouchableOpacity>
-  //)
-//});
-  },[]);
+      }
+    });
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={logout}>
+          <MaterialCommunityIconsname
+            name="logout"
+            size={24}
+            color="grey"
+            styles={{ marginRight: 20 }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
-  function logout(){
+  function logout() {
     firebase.auth().signOut();
   }
-  
+
   return (
-    
     <ShopListStack.Navigator>
       <ShopListStack.Screen
         name="ListOfShops"
         component={ShopList}
         options={{
           title: HAWKER_INFO.hawkerName,
-          headerRight: () => (
-            <Button style = {styles.button} onPress={logout} />
-          ),
         }}
       />
       <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignContent: "space-between",
   },
-  button:{
+  button: {
     backgroundColor: "rgba(225, 130, 76, 1)",
     width: 120,
     alignItems: "center",

@@ -7,6 +7,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import ShopListScreen from "./ShopListScreen";
+import HawkerScreen from "./HawkerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
@@ -41,7 +42,7 @@ export default function DonatorMainScreen() {
         },
       }}
     >
-      <Tab.Screen name="Donate" component={ShopListScreen} />
+      <Tab.Screen name="Donate" component={HawkerScreen} />
       <Tab.Screen name="History" component={ShopListScreen} />
       <Tab.Screen name="Profile" component={ShopListScreen} />
     </Tab.Navigator>
