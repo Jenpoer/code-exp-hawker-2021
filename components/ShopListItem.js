@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTag, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 
-export default function ShopListItem({ shopName, itemTags, preferredNo }) {
+export default function ShopListItem({ shopName, itemTags, preferredNo, imgSrc }) {
   let [fontsLoaded] = useFonts({
     "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
@@ -15,7 +15,7 @@ export default function ShopListItem({ shopName, itemTags, preferredNo }) {
       <Image
         style={styles.image}
         source={{
-          uri: "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+          uri: `${imgSrc}`,
         }}
       />
       <View style={styles.columns}>

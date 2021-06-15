@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Image, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTag, faStar } from "@fortawesome/free-solid-svg-icons";
-import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+import { useFonts, Inter_600SemiBold } from "@expo-google-fonts/inter";
 
 export default function ShopItemListItem({ name, price }) {
   let [fontsLoaded] = useFonts({
