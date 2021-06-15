@@ -29,17 +29,12 @@ const SAMPLE_SHOPS = [
   },
 ];
 
-const HAWKER_INFO = {
-  hawkerName: "Super Hawker",
-  hawkerAddress: "Something Road",
-};
-
-function ShopList({ navigation }) {
+function ShopList({ route, navigation }) {
   function renderItem({ item }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ShopDetails", { ...item, ...HAWKER_INFO })
+          navigation.navigate("ShopDetails", { ...item, ...route.params })
         }
       >
         <ShopListItem
@@ -65,7 +60,8 @@ function ShopList({ navigation }) {
 
 const ShopListStack = createStackNavigator();
 
-export default function ShopListScreen({ navigation }) {
+export default function ShopListScreen({ route, navigation }) {
+  const {id: hawkerId, title: hawkerName, address: hawkerAddress} = route.params
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -93,8 +89,13 @@ export default function ShopListScreen({ navigation }) {
       <ShopListStack.Screen
         name="ListOfShops"
         component={ShopList}
+        initialParams={{
+          hawkerId: hawkerId,
+          hawkerName: hawkerName,
+          hawkerAddress: hawkerAddress
+        }}
         options={{
-          title: HAWKER_INFO.hawkerName,
+          title: route.params.title,
         }}
       />
       <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />

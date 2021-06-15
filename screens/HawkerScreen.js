@@ -14,6 +14,8 @@ import {
 } from "react-native";
 //import filter from 'lodash.filter';
 import firebase from "../database/firebaseDB.js";
+import { createStackNavigator } from "@react-navigation/stack";
+import ShopListScreen from "./ShopListScreen";
 
 const DATA = [
   {
@@ -68,8 +70,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-export default function HawkerScreen({ navigation }) {
-
+function HawkerList({ navigation }) {
   const [query, setQuery] = useState("");
   const [fullData, setFullData] = useState([]);
 
@@ -107,7 +108,10 @@ export default function HawkerScreen({ navigation }) {
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {
+          setSelectedId(item.id);
+          navigation.navigate("ShopList", { ...item });
+        }}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
@@ -125,6 +129,25 @@ export default function HawkerScreen({ navigation }) {
         extraData={selectedId}
       />
     </SafeAreaView>
+  );
+}
+
+const HawkerStack = createStackNavigator();
+
+export default function HawkerScreen() {
+  return (
+    <HawkerStack.Navigator mode="modal">
+      <HawkerStack.Screen
+        name="HawkerList"
+        component={HawkerList}
+        options={{ headerShown: false }}
+      />
+      <HawkerStack.Screen
+        name="ShopList"
+        component={ShopListScreen}
+        options={{ headerShown: false }}
+      />
+    </HawkerStack.Navigator>
   );
 }
 

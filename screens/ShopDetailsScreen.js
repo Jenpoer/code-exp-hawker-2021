@@ -18,7 +18,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 // 2 - Modal popup of the items u wanna buy WHICH IS ANOTHER STACK NAVIGATOR TO THE "CART"
 
 function ShopItemsList({ route, navigation }) {
-  const { shopName, hawkerName, hawkerAddress } = route.params;
+  const {
+    shopName,
+    hawkerId,
+    hawkerName,
+    hawkerAddress,
+  } = route.params;
   const SAMPLE_FOOD = [
     { name: "Chicken Rice", price: 2.5 },
     { name: "Roasted Chicken Rice", price: 3 },
@@ -51,8 +56,14 @@ function ShopItemsList({ route, navigation }) {
 const ShopDetailsStack = createStackNavigator();
 
 export default function ShopDetailsScreen({ route, navigation }) {
-  const { shopName, itemTags, preferredNo, hawkerName, hawkerAddress } =
-    route.params;
+  const {
+    shopName,
+    itemTags,
+    preferredNo,
+    hawkerId,
+    hawkerName,
+    hawkerAddress,
+  } = route.params;
   return (
     <ShopDetailsStack.Navigator mode="modal">
       <ShopDetailsStack.Screen
