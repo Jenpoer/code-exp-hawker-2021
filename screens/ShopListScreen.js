@@ -13,27 +13,35 @@ import ShopDetailsScreen from "./ShopDetailsScreen.js";
 import firebase from "../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
-  { shopName: "Eat Rice Lah", itemTags: ["Rice", "Chicken"], preferredNo: 7 },
-  { shopName: "Eat Noodles", itemTags: ["Noodle"], preferredNo: 7 },
+  {
+    shopName: "Eat Rice Lah",
+    itemTags: ["Rice", "Chicken"],
+    preferredNo: 7,
+    imgSrc:
+      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+  },
+  {
+    shopName: "Eat Noodles",
+    itemTags: ["Noodle"],
+    preferredNo: 7,
+    imgSrc:
+      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+  },
 ];
 
-const HAWKER_INFO = {
-  hawkerName: "Super Hawker",
-  hawkerAddress: "Something Road",
-};
-
-function ShopList({ navigation }) {
+function ShopList({ route, navigation }) {
   function renderItem({ item }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ShopDetails", { ...item, ...HAWKER_INFO })
+          navigation.navigate("ShopDetails", { ...item, ...route.params })
         }
       >
         <ShopListItem
           shopName={item.shopName}
           itemTags={item.itemTags}
           preferredNo={item.preferredNo}
+          imgSrc={item.imgSrc}
         />
       </TouchableOpacity>
     );
@@ -85,8 +93,13 @@ export default function ShopListScreen({ route, navigation }) {
       <ShopListStack.Screen
         name="ListOfShops"
         component={ShopList}
+        initialParams={{
+          hawkerId: hawkerId,
+          hawkerName: hawkerName,
+          hawkerAddress: hawkerAddress,
+        }}
         options={{
-          title: HAWKER_INFO.hawkerName,
+          title: hawkerName,
         }}
       />
       <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />

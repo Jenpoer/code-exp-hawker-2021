@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     display: "flex",
     boxShadow: "0 -1px 10px rgba(0, 0, 0, 0.25)",
     backgroundColor: "#304057",
-    marginTop: "25%",
   },
   image: {
     width: "100%",

@@ -13,7 +13,6 @@ import ShopItemListItem from "../components/ShopItemListItem";
 import ShopDetailsHeader from "../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddToCartModal from "./AddToCartModal";
-import test from "./TestAddToCart";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
