@@ -9,14 +9,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-
+import { createStackNavigator } from "@react-navigation/stack";
 import ShopListScreen from "./screens/ShopListScreen";
-
+import signupscreen from "./screens/signupscreen";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name= "sign up page" component={signupscreen} 
+        options={{
+          headerTitle: "LOGO",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 30,
+            textAlign: "center",
+            color: "white",
+          },
+          headerStyle: {
+            height: 120,
+            backgroundColor: "rgba(48, 64, 87, 1)",
+            borderBottomColor: "#ccc",
+            borderBottomWidth: 1,
+          },
+        }}/>
+      </Stack.Navigator>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
