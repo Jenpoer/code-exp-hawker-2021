@@ -25,7 +25,7 @@ import React from "react";
        password
      );
      console.log(userCredential);
-     //navigation.navigate("Chat", {email});
+     navigation.navigate("shop list", {email});
      setErrorText(`Welcome ${userCredential.user.email}`);
    }
 
