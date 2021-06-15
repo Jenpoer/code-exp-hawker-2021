@@ -102,7 +102,13 @@ export default function ShopListScreen({ route, navigation }) {
           title: hawkerName,
         }}
       />
-      <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />
+      <ShopListStack.Screen
+        name="ShopDetails"
+        component={ShopDetailsScreen}
+        options={{
+          title: "Menu",
+        }}
+      />
     </ShopListStack.Navigator>
   );
 }
