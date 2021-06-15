@@ -1,29 +1,19 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faHandHoldingHeart,
-  faHistory,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import signupscreen from "./screens/signupscreen";
-import ShopListScreen from "./screens/ShopListScreen";
 import ShopDetailsScreen from "./screens/ShopDetailsScreen";
 import loginScreen from "./screens/loginScreen";
+import DonatorMainScreen from "./screens/DonatorMainScreen"
 
-
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none" mode="modal">
-      <Stack.Screen name= "shop list" component={ShopListScreen} />
+      <Stack.Screen name= "donatorMain" component={DonatorMainScreen} />
         <Stack.Screen name = "Login" component={loginScreen} 
         options={{
           headerTitle: "LOGO",
