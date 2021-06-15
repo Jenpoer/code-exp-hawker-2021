@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import {
   View,
   Text,
@@ -10,15 +10,49 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import firebase from "../database/firebaseDB";
 
-const auth = firebase.auth();
 
-export default function signupscreen({ navigation }) {
+
+export default function signupscreen({ navigation ,route}) {
+  const db = firebase.firestore().collection("userinfo");
+  //const auth = firebase.auth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
   const [user, setUser] = useState("");
+  const [status, setStatus] = useState("");
+
+
+  useEffect(()=>{
+    if(errorText){
+      const newData = {
+      email: email,
+      user:user,
+      status: status,
+      id: user.length.toString(),
+    };
+    db.add(newData);
+    }
+    
+  },[]);
+
+  // useEffect(() => {
+  //   const unsubscribe = db.onSnapshot((collection)=>{
+  //     const updatedNotes = collection.docs.map((doc) => {
+  //       return {
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       };
+  //     });
+  //     //setNotes(updatedNotes);
+  //   });
+
+//     return () => {
+//       unsubscribe();
+//     };
+// }, []);
 
   async function signup() {
     Keyboard.dismiss();
@@ -32,6 +66,7 @@ export default function signupscreen({ navigation }) {
         .createUserWithEmailAndPassword(email, password);
       console.log(userCredential);
       setErrorText(`Sign up successful ${user}, head back to login page`);
+      
     }
   }
 
@@ -69,13 +104,21 @@ export default function signupscreen({ navigation }) {
           value={password}
           onChangeText={(input) => setPassword(input)}
         />
+      <RNPickerSelect
+                 onValueChange={(value) => setStatus(value)}
+                 items={[
+                     { label: "Donor", value: "Donor" },
+                     { label: "Donatee", value: "Donatee" },
+                 
+                 ]}
+             />
         <TouchableOpacity onPress={signup} style={styles.signupbutton}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{errorText}</Text>
         <Text
           style={styles.loginText}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {navigation.navigate("Login")}}
         >
           Already Registered? Click here to login
         </Text>

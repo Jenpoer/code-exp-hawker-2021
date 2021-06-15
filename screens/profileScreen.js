@@ -1,44 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  TouchableOpacity,
-  Button,
 } from "react-native";
-import ShopListItem from "../components/ShopListItem";
-import { createStackNavigator } from "@react-navigation/stack";
-import ShopDetailsScreen from "./ShopDetailsScreen.js";
-import firebase from "../database/firebaseDB.js";
-
+import firebase from "../database/firebaseDB.js"
 
 export default function profileScreen(){
+    
     function logout() {
         firebase.auth().signOut();
       }
 
       return(
-        <View style={StyleSheet.container} >
-         <Text 
-          style={styles.logout} onPress={logout}>
-          logout
-        </Text> 
+        <View style={styles.container} >
+            <Text style={styles.header} >PROFILE</Text>
+         <Text style={styles.logout} onPress={logout}>logout</Text> 
         </View>
       )
 }
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: "center",
-      padding: 24,
-      backgroundColor : "rgba(48, 64, 87, 1)"
-    },
+        flex: 1,
+        marginTop: 20,
+        backgroundColor: "rgba(48, 64, 87, 1)",
+      },
     logout:{
         fontSize: 36,
         fontWeight: "bold",
         marginBottom: 24,
         color: "black"
-    }
+    },
+    header: {
+        fontSize: 33,
+        textAlign: "center",
+        color: "white",
+      },
 })
 

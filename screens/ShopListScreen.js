@@ -13,35 +13,27 @@ import ShopDetailsScreen from "./ShopDetailsScreen.js";
 import firebase from "../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
-  {
-    shopName: "Eat Rice Lah",
-    itemTags: ["Rice", "Chicken"],
-    preferredNo: 7,
-    imgSrc:
-      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
-  },
-  {
-    shopName: "Eat Noodles",
-    itemTags: ["Noodle"],
-    preferredNo: 7,
-    imgSrc:
-      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
-  },
+  { shopName: "Eat Rice Lah", itemTags: ["Rice", "Chicken"], preferredNo: 7 },
+  { shopName: "Eat Noodles", itemTags: ["Noodle"], preferredNo: 7 },
 ];
 
-function ShopList({ route, navigation }) {
+const HAWKER_INFO = {
+  hawkerName: "Super Hawker",
+  hawkerAddress: "Something Road",
+};
+
+function ShopList({ navigation }) {
   function renderItem({ item }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ShopDetails", { ...item, ...route.params })
+          navigation.navigate("ShopDetails", { ...item, ...HAWKER_INFO })
         }
       >
         <ShopListItem
           shopName={item.shopName}
           itemTags={item.itemTags}
           preferredNo={item.preferredNo}
-          imgSrc={item.imgSrc}
         />
       </TouchableOpacity>
     );
@@ -60,16 +52,15 @@ function ShopList({ route, navigation }) {
 
 const ShopListStack = createStackNavigator();
 
-export default function ShopListScreen({ route, navigation }) {
-  const {id: hawkerId, title: hawkerName, address: hawkerAddress} = route.params
+export default function ShopListScreen({ navigation }) {
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("shop list", { id: user.id, email: user.email });
-      } else {
-        navigation.navigate("Login");
-      }
-    });
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     navigation.navigate("shop list", { id: user.id, email: user.email });
+    //   } else {
+    //     navigation.navigate("Login");
+    //   }
+    // });
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
@@ -89,13 +80,8 @@ export default function ShopListScreen({ route, navigation }) {
       <ShopListStack.Screen
         name="ListOfShops"
         component={ShopList}
-        initialParams={{
-          hawkerId: hawkerId,
-          hawkerName: hawkerName,
-          hawkerAddress: hawkerAddress
-        }}
         options={{
-          title: route.params.title,
+          title: HAWKER_INFO.hawkerName,
         }}
       />
       <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />
