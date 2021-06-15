@@ -25,8 +25,7 @@ import React from "react";
        password
      );
      console.log(userCredential);
-     //navigation.navigate("Chat", {email});
-     setErrorText(`Welcome ${userCredential.user.email}`);
+     navigation.navigate("donatorMain");
    }
 
   //  const __doSignUp = () => {
