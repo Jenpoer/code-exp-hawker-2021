@@ -75,10 +75,6 @@ export default function ShopListScreen({ navigation }) {
     });
   }, []);
 
-  function logout() {
-    firebase.auth().signOut();
-  }
-
   return (
     <ShopListStack.Navigator>
       <ShopListStack.Screen
