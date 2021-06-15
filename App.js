@@ -22,7 +22,8 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode="none" mode="modal">
+      <Stack.Screen name= "shop list" component={ShopListScreen} />
         <Stack.Screen name = "Login" component={loginScreen} 
         options={{
           headerTitle: "LOGO",
@@ -56,7 +57,7 @@ export default function App() {
           },
         }}/>
         
-        <Stack.Screen name= "shop list" component={ShopListScreen} />
+        
         <Stack.Screen name= "shop Details" component={ShopDetailsScreen} />
       </Stack.Navigator>
       {/* {<Tab.Navigator

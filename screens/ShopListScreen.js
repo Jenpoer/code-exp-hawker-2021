@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopDetailsScreen from "./ShopDetailsScreen.js";
+import firebase from "../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
   { shopName: "Eat Rice Lah", itemTags: ["Rice", "Chicken"], preferredNo: 7 },
@@ -50,7 +51,17 @@ function ShopList({ navigation }) {
 
 const ShopListStack = createStackNavigator();
 
-export default function ShopListScreen() {
+export default function ShopListScreen({navigation}) {
+  useEffect(()=> {
+    firebase.auth().onAuthStateChanged((user) => {
+    if(user){
+        navigation.navigate("shop list",{id: user.id, email:user.email});
+    }else{
+        navigation.navigate("Login");
+    }
+});
+  },[]);
+  
   return (
     <ShopListStack.Navigator>
       <ShopListStack.Screen

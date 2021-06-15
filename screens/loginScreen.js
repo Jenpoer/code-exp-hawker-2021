@@ -9,9 +9,9 @@ import React from "react";
    TouchableWithoutFeedback,
    Keyboard,
  } from "react-native";
- //import firebase from "../database/firebaseDB";
+ import firebase from "../database/firebaseDB";
 
- //const auth = firebase.auth();
+ const auth = firebase.auth();
 
  export default function LoginScreen({ navigation }) {
    const [email, setEmail] = useState("");
@@ -65,7 +65,7 @@ import React from "react";
    return (
      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View style={styles.container}>
-         <Text style={styles.title}>LOGO</Text>
+         <Text style={styles.title}>Login in</Text>
          <Text style={styles.fieldTitle}>Email</Text>
          <TextInput
            style={styles.input}
