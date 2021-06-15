@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -60,15 +61,34 @@ export default function ShopListScreen({navigation}) {
         navigation.navigate("Login");
     }
 });
+// navigation.setOptions({
+//   headerRight: ()=> (
+//       <TouchableOpacity onPress={logout}>
+//           <MaterialCommunityIconsname 
+//           name="logout"
+//           size={24}
+//           color="grey"
+//           styles={{marginRight: 20}}/>
+//       </TouchableOpacity>
+  //)
+//});
   },[]);
+
+  function logout(){
+    firebase.auth().signOut();
+  }
   
   return (
+    
     <ShopListStack.Navigator>
       <ShopListStack.Screen
         name="ListOfShops"
         component={ShopList}
         options={{
           title: HAWKER_INFO.hawkerName,
+          headerRight: () => (
+            <Button style = {styles.button} onPress={logout} />
+          ),
         }}
       />
       <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />
@@ -83,5 +103,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#304057",
     display: "flex",
     alignContent: "space-between",
+  },
+  button:{
+    backgroundColor: "rgba(225, 130, 76, 1)",
+    width: 120,
+    alignItems: "center",
+    padding: 18,
+    marginTop: 12,
+    marginBottom: 36,
   },
 });

@@ -10,10 +10,10 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-//import firebase from "../database/firebase";
+import firebase from "../database/firebaseDB";
 
 
-//const db = firebase.firestore();
+const db = firebase.firestore();
 
 export default function signupscreen({navigation}){
 
