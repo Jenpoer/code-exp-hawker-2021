@@ -12,18 +12,15 @@ import {
 import ShopItemListItem from "../components/ShopItemListItem";
 import ShopDetailsHeader from "../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
+import AddToCartModal from "../screens/AddToCartModal";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
 // 2 - Modal popup of the items u wanna buy WHICH IS ANOTHER STACK NAVIGATOR TO THE "CART"
 
+const ShopItemsListStack = createStackNavigator();
 function ShopItemsList({ route, navigation }) {
-  const {
-    shopName,
-    hawkerId,
-    hawkerName,
-    hawkerAddress,
-  } = route.params;
+  const { shopName, hawkerId, hawkerName, hawkerAddress } = route.params;
   const SAMPLE_FOOD = [
     { name: "Chicken Rice", price: 2.5 },
     { name: "Roasted Chicken Rice", price: 3 },
@@ -31,7 +28,7 @@ function ShopItemsList({ route, navigation }) {
 
   function renderItem({ item }) {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={navigation.navigate("AddToCart")}>
         <ShopItemListItem name={item.name} price={item.price} />
       </TouchableOpacity>
     );
@@ -53,6 +50,25 @@ function ShopItemsList({ route, navigation }) {
   );
 }
 
+function ShopItemsListStackScreen({ route }) {
+  const { shopName, hawkerName, hawkerAddress } = route.params;
+
+  return (
+    <ShopItemsListStack.Navigator>
+      <ShopItemsListStack.Screen
+        name="ListOfItems"
+        component={ShopItemsList}
+        initialParams={{
+          shopName: shopName,
+          hawkerName: hawkerName,
+          hawkerAddress: hawkerAddress,
+        }}
+        options={{ title: shopName, headerShown: false }}
+      />
+    </ShopItemsListStack.Navigator>
+  );
+}
+
 const ShopDetailsStack = createStackNavigator();
 
 export default function ShopDetailsScreen({ route, navigation }) {
@@ -65,22 +81,18 @@ export default function ShopDetailsScreen({ route, navigation }) {
     hawkerAddress,
   } = route.params;
   return (
-    <ShopDetailsStack.Navigator mode="modal">
+    <ShopDetailsStack.Navigator initialRouteName="ListOfItemsStack">
       <ShopDetailsStack.Screen
-        name="ListOfItems"
-        component={ShopItemsList}
+        name="ListOfItemsStack"
+        component={ShopItemsListStackScreen}
         initialParams={{
           shopName: shopName,
           hawkerName: hawkerName,
           hawkerAddress: hawkerAddress,
         }}
-        options={{ title: shopName, headerShown: false }}
+        options={{headerShown: false}}
       />
-      <ShopDetailsStack.Screen
-        name="ShopDetails"
-        component={ShopDetailsScreen}
-        options={{ headerShown: false }}
-      />
+      <ShopDetailsStack.Screen name="AddToCart" component={AddToCartModal} />
     </ShopDetailsStack.Navigator>
   );
 }

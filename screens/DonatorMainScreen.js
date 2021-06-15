@@ -10,7 +10,11 @@ import ShopListScreen from "./ShopListScreen";
 import HawkerScreen from "./HawkerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import profileScreen from "./profileScreen";
+<<<<<<< HEAD
 import firebase from "../database/firebaseDB.js";
+=======
+import DonatorHistory from "./DonatorHistory";
+>>>>>>> df754aa0e1c80ff9584967d54dc4d84214d71140
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +58,7 @@ export default function DonatorMainScreen({navigation}) {
       }}
     >
       <Tab.Screen name="Donate" component={HawkerScreen} />
-      <Tab.Screen name="History" component={ShopListScreen} />
+      <Tab.Screen name="History" component={DonatorHistory} />
       <Tab.Screen name="Profile" component={profileScreen} />
     </Tab.Navigator>
   );

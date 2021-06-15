@@ -136,7 +136,7 @@ const HawkerStack = createStackNavigator();
 
 export default function HawkerScreen() {
   return (
-    <HawkerStack.Navigator mode="modal">
+    <HawkerStack.Navigator>
       <HawkerStack.Screen
         name="HawkerList"
         component={HawkerList}
