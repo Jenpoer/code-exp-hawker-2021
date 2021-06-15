@@ -52,30 +52,8 @@ function ShopList({ navigation }) {
 
 const ShopListStack = createStackNavigator();
 
-<<<<<<< HEAD
-export default function ShopListScreen({ navigation }) {
-  useEffect(() => {
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     navigation.navigate("shop list", { id: user.id, email: user.email });
-    //   } else {
-    //     navigation.navigate("Login");
-    //   }
-    // });
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={logout}>
-          <MaterialCommunityIconsname
-            name="logout"
-            size={24}
-            color="grey"
-            styles={{ marginRight: 20 }}
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
-=======
+
+    
 export default function ShopListScreen({ route, navigation }) {
   const {id: hawkerId, title: hawkerName, address: hawkerAddress} = route.params
   // useEffect(() => {
@@ -99,7 +77,6 @@ export default function ShopListScreen({ route, navigation }) {
   //     ),
   //   });
   // }, []);
->>>>>>> df754aa0e1c80ff9584967d54dc4d84214d71140
 
   return (
     <ShopListStack.Navigator>
