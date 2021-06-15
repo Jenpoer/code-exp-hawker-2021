@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import IncDecButton from "../components/IncDecButton";
 
 export default function AddToCartModal() {
@@ -13,7 +13,7 @@ export default function AddToCartModal() {
           }}
         />
         <Text style={styles.title}>Chicken Rice</Text>
-        <Text style={styles.preference}>Good chicken rice as usual</Text>
+        <Text style={styles.caption}>Good chicken rice as usual</Text>
         <View style={styles.columns}>
           <View style={styles.left}>
             <Text style={styles.price}>$2.50</Text>
@@ -34,19 +34,19 @@ export default function AddToCartModal() {
 
 const styles = StyleSheet.create({
   overlay: {
+    width: "100vw",
+    height: "100vh",
     backgroundColor: "rgba(0, 0, 0, 0.4)",
-    width: "100%",
-    height: "100%",
+    zIndex: 1,
   },
   container: {
     display: "flex",
-    marginTop: "auto",
     boxShadow: "0 -1px 10px rgba(0, 0, 0, 0.25)",
     backgroundColor: "#304057",
+    marginTop: "25%",
   },
   image: {
     width: "100%",
-    flex: 1,
     alignSelf: "center",
     paddingTop: "calc(160/325 * 100%)",
   },
@@ -57,14 +57,12 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   left: {
-    flex: 1,
     flexBasis: "50%",
     paddingTop: 5,
   },
   right: {
     display: "flex",
     flexDirection: "row",
-    flex: 1,
     flexBasis: "50%",
     paddingTop: 5,
   },
@@ -84,21 +82,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 5,
   },
-  preference: {
-    padding: 2,
-    fontSize: 13,
-    color: "#FEFDFB",
-    alignSelf: "center",
-  },
   price: {
     fontSize: 24,
     lineHeight: "120%",
     color: "#FEFDFB",
     padding: 10,
-  },
-  icon: {
-    size: 13,
-    color: "#FEFDFB",
   },
   confirmButton: {
     backgroundColor: "rgba(225, 130, 76, 1)",
@@ -112,5 +100,23 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 18,
+  },
+  circle: {
+    width: 50,
+    height: 50,
+    backgroundColor: "tomato",
+    borderRadius: "50%",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.25)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  char: {
+    fontSize: 20,
+    fontStyle: "bold",
+    color: "white",
+  },
+  caption: {
+    color: "white",
+    alignSelf: "center",
   },
 });
