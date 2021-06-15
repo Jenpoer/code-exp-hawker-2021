@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -10,11 +10,24 @@ import ShopListScreen from "./ShopListScreen";
 import HawkerScreen from "./HawkerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import profileScreen from "./profileScreen";
+<<<<<<< HEAD
+import firebase from "../database/firebaseDB.js";
+=======
 import DonatorHistory from "./DonatorHistory";
+>>>>>>> df754aa0e1c80ff9584967d54dc4d84214d71140
 
 const Tab = createBottomTabNavigator();
 
-export default function DonatorMainScreen() {
+export default function DonatorMainScreen({navigation}) {
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("donatorMain", { id: user.id, email: user.email });
+      } else {
+        navigation.navigate("Login");
+      }
+    });
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

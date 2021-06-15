@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  TouchableOpacity,
-  Button,
 } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
