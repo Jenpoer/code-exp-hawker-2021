@@ -13,8 +13,20 @@ import ShopDetailsScreen from "./ShopDetailsScreen.js";
 import firebase from "../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
-  { shopName: "Eat Rice Lah", itemTags: ["Rice", "Chicken"], preferredNo: 7 },
-  { shopName: "Eat Noodles", itemTags: ["Noodle"], preferredNo: 7 },
+  {
+    shopName: "Eat Rice Lah",
+    itemTags: ["Rice", "Chicken"],
+    preferredNo: 7,
+    imgSrc:
+      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+  },
+  {
+    shopName: "Eat Noodles",
+    itemTags: ["Noodle"],
+    preferredNo: 7,
+    imgSrc:
+      "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+  },
 ];
 
 const HAWKER_INFO = {
@@ -34,6 +46,7 @@ function ShopList({ navigation }) {
           shopName={item.shopName}
           itemTags={item.itemTags}
           preferredNo={item.preferredNo}
+          imgSrc={item.imgSrc}
         />
       </TouchableOpacity>
     );

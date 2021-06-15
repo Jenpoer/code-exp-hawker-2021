@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 // import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 
-export default function HawkerListItem({ hawkerName, hawkerAddress }) {
+export default function HawkerListItem({ hawkerName, hawkerAddress, imgSrc }) {
   //   let [fontsLoaded] = useFonts({
   //     "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
   //     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
