@@ -23,7 +23,7 @@ const SAMPLE_SHOPS = [
   {
     shopName: "Eat Noodles",
     itemTags: ["Noodle"],
-    preferredNo: 7,
+    preferredNo: 5,
     imgSrc:
       "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
   },

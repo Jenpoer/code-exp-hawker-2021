@@ -21,13 +21,27 @@ import AddToCartModal from "./AddToCartModal";
 function ShopItemsList({ route, navigation }) {
   const { shopName, hawkerId, hawkerName, hawkerAddress } = route.params;
   const SAMPLE_FOOD = [
-    { name: "Chicken Rice", price: 2.5 },
-    { name: "Roasted Chicken Rice", price: 3 },
+    {
+      id: 1,
+      name: "Chicken Rice",
+      price: 2.5,
+      description: "Good chicken rice as usual.",
+    },
+    {
+      id: 2,
+      name: "Roasted Chicken Rice",
+      price: 3,
+      description: "Like chicken rice but roasted",
+    },
   ];
+
+  const [foodList, setFoodList] = useState(SAMPLE_FOOD);
 
   function renderItem({ item }) {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("AddToCart")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AddToCart", { ...item })}
+      >
         <ShopItemListItem name={item.name} price={item.price} />
       </TouchableOpacity>
     );
@@ -42,7 +56,7 @@ function ShopItemsList({ route, navigation }) {
       />
       <FlatList
         style={{ width: "100%" }}
-        data={SAMPLE_FOOD}
+        data={foodList}
         renderItem={renderItem}
       />
     </ScrollView>

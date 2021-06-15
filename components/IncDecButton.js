@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function IncDecButton({ character }) {
+export default function IncDecButton({ onPress, character }) {
   return (
-    <TouchableOpacity style={styles.circle}>
+    <TouchableOpacity onPress={onPress} style={styles.circle}>
       <Text style={styles.char}>{character}</Text>
     </TouchableOpacity>
   );

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import IncDecButton from "../components/IncDecButton";
 
-export default function AddToCartModal() {
+export default function AddToCartModal({ name, price, description }) {
+  const [quantity, setQuantity] = useState(1);
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
@@ -12,20 +13,28 @@ export default function AddToCartModal() {
             uri: "https://www.healthhub.sg/sites/assets/Assets/Categories/Pregnancy/Article008_images_mainimage.jpg",
           }}
         />
-        <Text style={styles.title}>Chicken Rice</Text>
-        <Text style={styles.caption}>Good chicken rice as usual</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.caption}>{description}</Text>
         <View style={styles.columns}>
           <View style={styles.left}>
-            <Text style={styles.price}>$2.50</Text>
+            <Text style={styles.price}>${price * quantity}</Text>
           </View>
           <View style={styles.right}>
-            <IncDecButton character="-" />
-            <Text style={styles.price}>1</Text>
-            <IncDecButton character="+" />
+            <IncDecButton
+              character="-"
+              onPress={() => {
+                if (quantity > 1) setQuantity(quantity - 1);
+              }}
+            />
+            <Text style={styles.price}>{quantity}</Text>
+            <IncDecButton
+              character="+"
+              onPress={() => setQuantity(quantity + 1)}
+            />
           </View>
         </View>
         <TouchableOpacity style={styles.confirmButton}>
-          <Text style={styles.buttonText}>CONFIRM PAYMENT</Text>
+          <Text style={styles.buttonText}>DONATE</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -43,6 +52,7 @@ const styles = StyleSheet.create({
     display: "flex",
     boxShadow: "0 -1px 10px rgba(0, 0, 0, 0.25)",
     backgroundColor: "#304057",
+    height: "100%",
   },
   image: {
     width: "100%",
@@ -54,6 +64,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "stretch",
+    justifyContent: "center",
   },
   left: {
     flexBasis: "50%",
