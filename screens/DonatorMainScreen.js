@@ -10,11 +10,8 @@ import ShopListScreen from "./ShopListScreen";
 import HawkerScreen from "./HawkerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import profileScreen from "./profileScreen";
-<<<<<<< HEAD
-import firebase from "../database/firebaseDB.js";
-=======
 import DonatorHistory from "./DonatorHistory";
->>>>>>> df754aa0e1c80ff9584967d54dc4d84214d71140
+import firebase from "../database/firebaseDB.js"
 
 const Tab = createBottomTabNavigator();
 
