@@ -8,13 +8,17 @@ import {
 } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
+import ShopDetailsScreen from "./ShopDetailsScreen.js";
 
 const SAMPLE_SHOPS = [
   { shopName: "Eat Rice Lah", itemTags: ["Rice", "Chicken"], preferredNo: 7 },
   { shopName: "Eat Noodles", itemTags: ["Noodle"], preferredNo: 7 },
 ];
 
-const HAWKER_INFO = {hawkerName: "Super Hawker", hawkerAddress: "Something Road"};
+const HAWKER_INFO = {
+  hawkerName: "Super Hawker",
+  hawkerAddress: "Something Road",
+};
 
 function ShopList({ navigation }) {
   function renderItem({ item }) {
@@ -56,7 +60,7 @@ export default function ShopListScreen() {
           title: HAWKER_INFO.hawkerName,
         }}
       />
-      <ShopListStack.Screen name="ShopDetails" component={ShopList} />
+      <ShopListStack.Screen name="ShopDetails" component={ShopDetailsScreen} />
     </ShopListStack.Navigator>
   );
 }

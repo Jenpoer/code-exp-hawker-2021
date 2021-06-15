@@ -12,7 +12,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopListScreen from "./screens/ShopListScreen";
 import signupscreen from "./screens/signupscreen";
+
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -35,7 +37,7 @@ export default function App() {
           },
         }}/>
       </Stack.Navigator>
-      <Tab.Navigator
+      {/* {<Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -64,7 +66,7 @@ export default function App() {
         <Tab.Screen name="Donate" component={ShopListScreen} />
         <Tab.Screen name="History" component={ShopListScreen} />
         <Tab.Screen name="Profile" component={ShopListScreen} />
-      </Tab.Navigator>
+      </Tab.Navigator>} */}
     </NavigationContainer>
   );
 }
