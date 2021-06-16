@@ -21,10 +21,23 @@ export default function signupscreen({ navigation, route }) {
   const [errorText, setErrorText] = useState("");
   const [user, setUser] = useState("");
   const [status, setStatus] = useState("");
+  const [data,setData] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = 
+      db.onSnapshot((collection) => {
+       const updatedData = collection.docs.map((doc) => doc.data());
+        setData(updatedData);
+        console.log(data);
+      });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   // useEffect(()=>{
   //   if(errorText){
-  //     const newData = {
   //     email: email,
   //     user:user,
   //     status: status,
