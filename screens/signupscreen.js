@@ -78,6 +78,10 @@ export default function signupscreen({ navigation, route }) {
 
       setErrorText(`Sign up successful ${user}, head back to login page`);
     }
+    if(status == "Donatee"){
+      navigation.navigate("eligibilityScreen")
+    }
+
   }
 
   return (

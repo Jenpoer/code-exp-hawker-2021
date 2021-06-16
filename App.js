@@ -6,7 +6,7 @@ import signupscreen from "./screens/signupscreen";
 import ShopDetailsScreen from "./screens/ShopDetailsScreen";
 import loginScreen from "./screens/loginScreen";
 import DonatorMainScreen from "./screens/DonatorMainScreen";
-
+import eligibilityScreen from "./screens/EligibilityScreen"
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -52,6 +52,7 @@ export default function App() {
             },
           }}
         />
+        <Stack.Screen name="eligibilityScreen" component={eligibilityScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -92,7 +92,7 @@ export default function eligibility({ navigation, route }) {
         />
         <TouchableOpacity
           style={styles.submitbutton}
-          onPress={() => navigation.navigate("review page")}
+          onPress={() => navigation.navigate("Login")}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
