@@ -36,17 +36,7 @@ export default function signupscreen({ navigation, route }) {
     };
   }, []);
 
-  // useEffect(()=>{
-  //   if(errorText){
-  //     email: email,
-  //     user:user,
-  //     status: status,
-  //     id: user.length.toString(),
-  //   };
-  //   db.add(newData);
-  //   }
 
-  // },[]);
 
   // useEffect(() => {
   //   const unsubscribe = db.onSnapshot((collection)=>{
