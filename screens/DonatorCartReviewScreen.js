@@ -15,16 +15,7 @@ import {
 import moment from "moment";
 import firebase from "../database/firebaseDB";
 
-const dishes = [
-  "Roasted Chicken Rice x 2",
-  "Steamed Chicken Rice x 2",
-  "Roasted Duck Rice x 3",
-  "Whole Chicken x 2",
-  "Chicken Noodle x 2",
-  "Duck Noodle x 2",
-];
-
-export default function DonatorCartReviewScreen({ route }) {
+export default function DonatorCartReviewScreen({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
   const db = firebase
     .firestore()
@@ -129,7 +120,7 @@ export default function DonatorCartReviewScreen({ route }) {
           Total Payment: {totalPrice.toFixed(2)}{" "}
         </Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("DonatorConfirmPayment")}}>
           <Text
             style={{
               textAlign: "center",

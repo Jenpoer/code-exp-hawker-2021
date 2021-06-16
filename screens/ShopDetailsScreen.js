@@ -15,8 +15,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AddToCartModal from "./AddToCartModal";
 import firebase from "../database/firebaseDB";
 import DonatorCartReviewScreen from "./DonatorCartReviewScreen";
+
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import DonatorConfirmPaymentScreen from "./DonatorConfirmPaymentScreen";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
@@ -137,6 +139,17 @@ export default function ShopDetailsScreen({ route, navigation }) {
         component={DonatorCartReviewScreen}
         options={{
           title: "Donation Box",
+          headerStyle: {
+            marginBottom: "auto",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+          },
+        }}
+      />
+      <ShopDetailsStack.Screen
+        name="DonatorConfirmPayment"
+        component={DonatorConfirmPaymentScreen}
+        options={{
+          title: "Payment Confirmed!",
           headerStyle: {
             marginBottom: "auto",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
