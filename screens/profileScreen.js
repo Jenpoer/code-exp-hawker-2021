@@ -13,7 +13,7 @@ const db = firebase.firestore().collection("userinfo");
 
 export default function profileScreen({ navigation }) {
     const [data,setData] = useState("");
-
+    const [data2,setData2] = useState([]);
     // useEffect(() => {
     //     const unsubscribe = 
     //       db.onSnapshot((collection) => {
@@ -30,17 +30,34 @@ export default function profileScreen({ navigation }) {
     navigation.navigate("Login");
   }
 
-  function getUser(){
-    const user = firebase.auth().currentUser;
-    const databaseUSer = db.where(db.doc.id, "==" ,user.uid)
-    .get()
-    setData(databaseUSer.user);
-  }
+  useEffect(() => {
+    const user = firebase.auth().currentUser.uid;
+    if(user != null){
+        setData2(user)
+    db.doc(user).get().then(snapshot => setData(snapshot.data()))
+
+    }
+    // const unsubscribe = db
+    // .onSnapshot((collection) => {
+    //     const updatedData = collection.docs.map((doc) => {
+    //         const data = doc.data(user);
+
+    //     });
+    // setData(updatedData.email)
+    // });
+    // return () => { 
+    //           unsubscribe();
+    //         };
+    //  .get()
+    //  setData2(databaseUSer);
+  
+});
 
   return (
     <View style={styles.container}>
         <Text style= {styles.header}>PROFILE</Text>
-        <Text style={styles.logout}>{data} </Text>
+        
+        <Text style={styles.logout}>info :{data.user} </Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
