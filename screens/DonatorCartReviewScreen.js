@@ -34,6 +34,7 @@ export default function DonatorCartReviewScreen({ route }) {
 
   const [cartData, setCartData] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Load Firebase data on start
   useEffect(() => {
@@ -46,6 +47,8 @@ export default function DonatorCartReviewScreen({ route }) {
       });
 
       setCartData(orders);
+
+      orders.forEach(order => setTotalPrice(totalPrice + order.quantity * order.price))
     });
 
     return () => {
@@ -56,10 +59,12 @@ export default function DonatorCartReviewScreen({ route }) {
   const { shopId, shopName, imgSrc, hawkerId, hawkerName, hawkerAddress } =
     route.params;
 
+  // Set Date
   useEffect(() => {
     var date = moment().format("MMMM Do YYYY, h:mm a");
     setCurrentDate(date);
   }, []);
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -121,7 +126,7 @@ export default function DonatorCartReviewScreen({ route }) {
           }}
         >
           {" "}
-          Total Payment: $40{" "}
+          Total Payment: {totalPrice.toFixed(2)}{" "}
         </Text>
 
         <TouchableOpacity style={styles.button}>

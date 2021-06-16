@@ -11,6 +11,7 @@ export default function AddToCartModal({ route, navigation }) {
     .collection("cart");
 
   const [quantity, setQuantity] = useState(1);
+  const [confirmText, setConfirmText] = useState("");
 
   const {
     shopName,
@@ -30,6 +31,13 @@ export default function AddToCartModal({ route, navigation }) {
       quantity: quantity,
     };
     db.doc(itemId).set(order);
+    showConfirmation();
+  }
+
+  function showConfirmation() {
+    clearTimeout(timeoutId);
+    setConfirmText("Added to cart!")
+    const timeoutId = setTimeout(() => setConfirmText(""), 1500);
   }
 
   return (
@@ -64,6 +72,7 @@ export default function AddToCartModal({ route, navigation }) {
         <TouchableOpacity style={styles.confirmButton} onPress={addToCart}>
           <Text style={styles.buttonText}>DONATE</Text>
         </TouchableOpacity>
+        <Text style={styles.confirmText}>{confirmText}</Text>
       </View>
     </View>
   );
@@ -159,6 +168,10 @@ const styles = StyleSheet.create({
   },
   caption: {
     color: "white",
+    alignSelf: "center",
+  },
+  confirmText: {
+    color: "#90ee90",
     alignSelf: "center",
   },
 });
