@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#304057",
   },
   imageContainer: {
-    width: "40%",
+    flex: 4,
     borderRadius: 20,
     overflow: "hidden",
   },
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     paddingTop: "100%",
   },
   textContainer: {
+    flex: 6,
     margin: 20,
     alignItems: "flex-start",
   },

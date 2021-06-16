@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   image: {
     contentFit: "cover",
-    width: "100%",
+    flex: 1,
     paddingTop: "calc(212 / 375 * 100%)",
   },
   textContainer: {
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     color: "#FEFDFB",
   },
   addressContainer: {
+    flex: 1,
     display: "flex",
     flexDirection: "row",
   },

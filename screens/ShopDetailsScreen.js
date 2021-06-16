@@ -14,6 +14,7 @@ import ShopDetailsHeader from "../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddToCartModal from "./AddToCartModal";
 
+
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
 // 2 - Modal popup of the items u wanna buy WHICH IS ANOTHER STACK NAVIGATOR TO THE "CART"
