@@ -17,50 +17,9 @@ import firebase from "../database/firebaseDB.js";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopListScreen from "./ShopListScreen";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "Sembawang Hills Food Centre",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/Rcb5b49f2739a8abca5a8a4470920a54d?rik=i5k0qg3MO%2bRCVQ&riu=http%3a%2f%2f1.bp.blogspot.com%2f-eMlOGFD7kN8%2fTwMX2rhmSeI%2fAAAAAAAASj8%2fYNyfPGn4S-A%2fs1600%2fPicture%2b607.jpg&ehk=YVM9UNipsY4fCvR2PCwik94UkOFKYnGdghMKTb%2fbVd4%3d&risl=&pid=ImgRaw",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Lau Pa Sat",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://www.tripsavvy.com/thmb/ovdT4AD8uwrgkNF00brHqNaXB_8=/1536x1021/filters:fill(auto,1)/lau_pa_sat_01-56a40c3d5f9b58b7d0d52325.JPG",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Newton Food Centre",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/OIP.NKL_o3HzOOaDRvfrK7cnugHaE8?pid=ImgDet&rs=1",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d73",
-    title: "Tiong Bahru Market",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/OIP.kQ48tY-wwQvt6pnA2FhsvgHaFj?w=213&h=180&c=7&o=5&dpr=1.5&pid=1.7",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d78",
-    title: "Amoy Street Food Centre",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/OIP.kQ48tY-wwQvt6pnA2FhsvgHaFj?w=213&h=180&c=7&o=5&dpr=1.5&pid=1.7",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d74",
-    title: "Maxwell Food Centre",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/OIP.kQ48tY-wwQvt6pnA2FhsvgHaFj?w=213&h=180&c=7&o=5&dpr=1.5&pid=1.7",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d75",
-    title: "Chinatown Complex Food Centre",
-    address: "590 Upper Thomson Rd Singapore 574419",
-    uri: "https://th.bing.com/th/id/OIP.kQ48tY-wwQvt6pnA2FhsvgHaFj?w=213&h=180&c=7&o=5&dpr=1.5&pid=1.7",
-  },
-];
+const db = firebase.firestore().collection("hawker");
+
+async function urlConverter(uri) {}
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -73,6 +32,30 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 function HawkerList({ navigation }) {
   const [query, setQuery] = useState("");
   const [fullData, setFullData] = useState([]);
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = db.onSnapshot((collection) => {
+      const registeredHawkers = collection.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      // Convert URL from Firebase storage into "download link" so the picture can display
+      registeredHawkers.map(async (hawker) => {
+        const ref = firebase.storage().refFromURL(hawker.uri);
+        const url = await ref.getDownloadURL();
+        hawker.uri = url;
+      });
+      setFullData(registeredHawkers);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   function renderHeader() {
     return (
@@ -123,7 +106,7 @@ function HawkerList({ navigation }) {
       <Text style={styles.header}>List of Hawker Centres</Text>
       <FlatList
         ListHeaderComponent={renderHeader}
-        data={DATA}
+        data={fullData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
