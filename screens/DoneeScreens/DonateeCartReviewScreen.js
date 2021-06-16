@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Switch,
   View,
@@ -12,17 +12,86 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import deleteCollection from "../../utility/deleteCollection";
+import moment from "moment";
+import firebase from "../../database/firebaseDB";
 
-const dishes = [
-  "Roasted Chicken Rice x 2",
-  "Steamed Chicken Rice x 2",
-  "Roasted Duck Rice x 3",
-  "Whole Chicken x 2",
-  "Chicken Noodle x 2",
-  "Duck Noodle x 2",
-];
+export default function DonatorCartReviewScreen({ route, navigation }) {
+  const user = firebase.auth().currentUser.uid;
+  const db = firebase.firestore().collection("userinfo/" + user + "/cart");
+  const db2 = firebase.firestore().collection("userinfo/" + user + "/history");
+  const db3 = firebase
+    .firestore()
+    .collection(
+      "hawker/" +
+        route.params.hawkerId +
+        "/shops/" +
+        route.params.shopId +
+        "/menu"
+    );
 
-export default function DonateeCartReviewScreen() {
+  const [cartData, setCartData] = useState([]);
+  const [currentDate, setCurrentDate] = useState("");
+  const [totalClaim, setTotalClaim] = useState(0);
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = db.onSnapshot((collection) => {
+      const orders = collection.docs.map((doc) => {
+        return {
+          itemId: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      setCartData(orders);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  // Update whenever cartData changes
+  useEffect(() => {
+    setTotalClaim(0);
+    cartData.forEach((order) => setTotalClaim(totalClaim + order.quantity));
+  }, [cartData]);
+
+  const { shopId, shopName, imgSrc, hawkerId, hawkerName, hawkerAddress } =
+    route.params;
+
+  // Set Date
+  useEffect(() => {
+    var date = moment().format("MMMM Do YYYY, h:mm a");
+    setCurrentDate(date);
+  }, []);
+
+  function confirmRedemption() {
+    // Add all orders into History
+    if (cartData.length != 0) {
+      db2
+        .doc(currentDate)
+        .set({ hawkerId: hawkerId, shopId: shopId, items: cartData });
+    }
+
+    // Subtract from "available" field
+    cartData.forEach((order) => {
+      const decrement = firebase.firestore.FieldValue.increment(-1 * order.quantity);
+      db3.doc(order.itemId).update({ available: decrement });
+    });
+
+    // Delete all items from cart
+    setCartData([]);
+    deleteCollection(firebase.firestore(), "userinfo/" + user + "/cart", 5);
+
+    // Navigate to confirm page after a short time out
+    clearTimeout(timeoutId);
+    const timeoutId = setTimeout(() => {
+      navigation.navigate("DonateeConfirmRedeem");
+    }, 250);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headercontainer}>
@@ -39,7 +108,7 @@ export default function DonateeCartReviewScreen() {
           }}
         >
           {" "}
-          Sembawang Hills Food Centre{" "}
+          {hawkerName}{" "}
         </Text>
         <Text
           style={{
@@ -50,7 +119,7 @@ export default function DonateeCartReviewScreen() {
           }}
         >
           {" "}
-          Chicken Rice Store{" "}
+          {shopName}{" "}
         </Text>
         <View style={styles.separator}></View>
         <Text
@@ -62,13 +131,13 @@ export default function DonateeCartReviewScreen() {
           }}
         >
           {" "}
-          2016-01-04 10:34:23{" "}
+          {currentDate}{" "}
         </Text>
         <View style={styles.separator}></View>
         <ScrollView style={styles.scrollView}>
-          {dishes.map((dish) => (
+          {cartData.map((dish) => (
             <Text style={{ padding: 10, color: "white", textAlign: "center" }}>
-              {dish}
+              {dish.name} x {dish.quantity}
             </Text>
           ))}
         </ScrollView>
@@ -83,7 +152,7 @@ export default function DonateeCartReviewScreen() {
           }}
         >
           {" "}
-          Total Points Deducted: 13{" "}
+          Claims left: 2{" "}
         </Text>
         <Text
           style={{
@@ -95,9 +164,10 @@ export default function DonateeCartReviewScreen() {
           }}
         >
           {" "}
-          Remaining Points: 151{" "}
+          Total Claim: {totalClaim}{" "}
         </Text>
-        <TouchableOpacity style={styles.button}>
+
+        <TouchableOpacity style={styles.button} onPress={confirmRedemption}>
           <Text
             style={{
               textAlign: "center",
@@ -107,7 +177,7 @@ export default function DonateeCartReviewScreen() {
             }}
           >
             {" "}
-            Redeem{" "}
+            Confirm{" "}
           </Text>
         </TouchableOpacity>
       </View>

@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }) {
         console.log('No such document!');
       } else {
         const userData = doc.data();
-        if(userData.status === "Donator") {
+        if(userData.status === "Donor") {
           navigation.navigate("donatorMain");
         } else {
           navigation.navigate("doneeMain");

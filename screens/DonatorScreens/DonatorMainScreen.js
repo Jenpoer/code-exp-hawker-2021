@@ -6,7 +6,6 @@ import {
   faHistory,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import ShopListScreen from "./ShopListScreen";
 import HawkerScreen from "./HawkerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import profileScreen from "../profileScreen";

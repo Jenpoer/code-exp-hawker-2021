@@ -84,24 +84,37 @@ export default function DonatorHistory() {
   const user = firebase.auth().currentUser.uid;
   const historyDB = db.collection("userinfo/" + user + "/history");
   const [historyData, setHistoryData] = useState([]);
+  const [hawkerName, setHawkerName] = useState("");
+  const [shopName, setShopName] = useState("");
+
+  // async function getShopName() {
+  //   const shopRef = await db
+  //         .collection("hawker/" + hawkerId + "/shops")
+  //         .doc(shopId)
+  //         .get();
+  //         if(hawkerRef) {
+  //           setShopName(shopRef.data().shopName);
+  //         }
+
+  //         db.collection("hawker").doc(hawkerId).get().then((docu) => {
+  //           if(docu.exists) {
+  //               setHawkerName(docu.data().title);
+  //           }
+  //         })
+  // }
 
   // Load Firebase data on start
   useEffect(() => {
     const unsubscribe = historyDB.onSnapshot((collection) => {
       const orders = collection.docs.map((doc) => {
         const { hawkerId, shopId, items } = doc.data();
-        const hawkerRef = db.collection("hawker").doc(hawkerId).get();
-        
 
-        const shopRef = db
-          .collection("hawker/" + hawkerId + "/shops")
-          .doc(shopId)
-          .get();
+       
 
         return {
           date: doc.id,
-          hawkerName: "hawkerName",
-          shopName: "shopName",
+          hawkerName: hawkerName,
+          shopName: shopName,
           items: items,
           totalPrice: 0,
         };
