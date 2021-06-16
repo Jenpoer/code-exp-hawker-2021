@@ -27,11 +27,56 @@ export default function profileScreen({ navigation }) {
     navigation.navigate("Login");
   }
 
+// useEffect(()=>{
+  //   const User = firebase.auth().currentUser.uid;
+  //   if (User != null) {
+  //     db.doc(User)
+  //       .get()
+  //       .then((snapshot) => setData(snapshot.data()));
+  //     if (data.user == "water1233") {
+  //       console.log("donor");
+  //       navigation.navigate("donatorMain", {
+  //         id: users.id,
+  //         email: users.email,
+  //       });
+  //     } else if (data.user == "sweet123") {
+  //       console.log("donee");
+  //       navigation.navigate("doneeMain", {
+  //         id: users.id,
+  //         email: users.email,
+  //       });
+  //     }
+  //   }
+  // });
+ function changeAccount(){
+    const User = firebase.auth().currentUser.uid;
+      if (User != null) {
+        db.doc(User)
+          .get()
+          .then((snapshot) => setData(snapshot.data()));
+        if (data.status == "Donor") {
+          //console.log("donor");
+          navigation.navigate("donatorMain", {
+            id: User.uid,
+            email: User.email,
+          });
+        } else if (data.status == "Donatee") {
+          //console.log("donee");
+          navigation.navigate("doneeMain", {
+            id: User.uid,
+            email: User.email,
+          });
+        }
+      }
+ }
+
+
   useEffect(() => {
     const user = firebase.auth().currentUser.uid;
     if(user != null){
-        setData2(user)
+        //setData2(user)
     db.doc(user).get().then(snapshot => setData(snapshot.data()))
+    //console.log(data.user)
     }
     // const unsubscribe = db
     // .onSnapshot((collection) => {
@@ -55,6 +100,9 @@ export default function profileScreen({ navigation }) {
       <Text style={styles.info}>INFO :{data.user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
+      </Text>
+      <Text style={styles.logout} onPress={changeAccount} >
+        change
       </Text>
     </View>
   );

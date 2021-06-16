@@ -6,14 +6,18 @@ import signupscreen from "./screens/signupscreen";
 import ShopDetailsScreen from "./screens/ShopDetailsScreen";
 import loginScreen from "./screens/loginScreen";
 import DonatorMainScreen from "./screens/DonatorMainScreen";
-import eligibilityScreen from "./screens/EligibilityScreen"
+import eligibilityScreen from "./screens/EligibilityScreen";
+import DoneeMainScreen from "./screens/DoneeMainScreen";
+import profileScreen from "./screens/profileScreen"
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none" mode="modal">
-        <Stack.Screen name="donatorMain" component={DonatorMainScreen} />
+      <Stack.Screen name="donatorMain" component={DonatorMainScreen} />
+      <Stack.Screen name="doneeMain" component={DoneeMainScreen} />
+      <Stack.Screen name="profileScreen" component={profileScreen} />
         <Stack.Screen
           name="Login"
           component={loginScreen}
