@@ -9,40 +9,51 @@ import { DrawerLayoutAndroid } from "react-native-gesture-handler";
 const db = firebase.firestore().collection("userinfo");
 
 export default function profileScreen({ navigation }) {
-  const [data, setData] = useState("");
-
-  // useEffect(() => {
-  //     const unsubscribe =
-  //       db.onSnapshot((collection) => {
-  //        const updatedData = collection.docs.map((doc) => doc.data());
-  //         setData(updatedData);
-  //       });
-
-  //     return () => {
-  //       unsubscribe();
-  //     };
-  //   }, []);
+    const [data,setData] = useState("");
+    const [data2,setData2] = useState([]);
+    // useEffect(() => {
+    //     const unsubscribe = 
+    //       db.onSnapshot((collection) => {
+    //        const updatedData = collection.docs.map((doc) => doc.data());
+    //         setData(updatedData);
+    //       });
+    
+    //     return () => { 
+    //       unsubscribe();
+    //     };
+    //   }, []);
   function logout() {
     firebase.auth().signOut();
     navigation.navigate("Login");
   }
 
-  //     const unsubscribe =
-  //       db.onSnapshot((collection) => {
-  //        const updatedData = collection.docs.map((doc) => doc.data());
-  //         setData(updatedData);
-  //       });
+  useEffect(() => {
+    const user = firebase.auth().currentUser.uid;
+    if(user != null){
+        setData2(user)
+    db.doc(user).get().then(snapshot => setData(snapshot.data()))
 
-  async function getUser() {
-    const user = firebase.auth().currentUser;
-    const databaseUSer = await db.doc(user.uid).get().data();
-    setData({ ...databaseUSer });
-  }
+    }
+    // const unsubscribe = db
+    // .onSnapshot((collection) => {
+    //     const updatedData = collection.docs.map((doc) => {
+    //         const data = doc.data(user);
+
+    //     });
+    // setData(updatedData.email)
+    // });
+    // return () => { 
+    //           unsubscribe();
+    //         };
+    //  .get()
+    //  setData2(databaseUSer);
+  
+});
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PROFILE</Text>
-      <Text style={styles.logout}>{data.email}</Text>
+      <Text style={styles.logout}>INFO :{data.user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
