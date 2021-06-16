@@ -11,74 +11,49 @@ const db = firebase.firestore().collection("userinfo");
 export default function profileScreen({ navigation }) {
     const [data,setData] = useState("");
     const [data2,setData2] = useState([]);
-    // useEffect(() => {
-    //     const unsubscribe = 
-    //       db.onSnapshot((collection) => {
-    //        const updatedData = collection.docs.map((doc) => doc.data());
-    //         setData(updatedData);
-    //       });
-    
-    //     return () => { 
-    //       unsubscribe();
-    //     };
-    //   }, []);
+    useEffect(() => {
+        const user = firebase.auth().currentUser.uid;
+        if(user != null){
+            setData2(user)
+        db.doc(user).get().then(snapshot => setData(snapshot.data()))
+   
+        }
+    });
   function logout() {
     firebase.auth().signOut();
     navigation.navigate("Login");
   }
 
-// useEffect(()=>{
-  //   const User = firebase.auth().currentUser.uid;
-  //   if (User != null) {
-  //     db.doc(User)
-  //       .get()
-  //       .then((snapshot) => setData(snapshot.data()));
-  //     if (data.user == "water1233") {
-  //       console.log("donor");
-  //       navigation.navigate("donatorMain", {
-  //         id: users.id,
-  //         email: users.email,
-  //       });
-  //     } else if (data.user == "sweet123") {
-  //       console.log("donee");
-  //       navigation.navigate("doneeMain", {
-  //         id: users.id,
-  //         email: users.email,
-  //       });
-  //     }
-  //   }
-  // });
- function changeAccount(){
-    const User = firebase.auth().currentUser.uid;
-      if (User != null) {
-        db.doc(User)
-          .get()
-          .then((snapshot) => setData(snapshot.data()));
-        if (data.status == "Donor") {
-          //console.log("donor");
-          navigation.navigate("donatorMain", {
-            id: User.uid,
-            email: User.email,
-          });
-        } else if (data.status == "Donatee") {
-          //console.log("donee");
-          navigation.navigate("doneeMain", {
-            id: User.uid,
-            email: User.email,
-          });
-        }
-      }
- }
+
+
+//  function changeAccount(){
+//     const User = firebase.auth().currentUser.uid;
+//       if (User != null) {
+//         db.doc(User)
+//           .get()
+//           .then((snapshot) => setData(snapshot.data()));
+//         if (data.status == "Donor") {
+//           //console.log("donor");
+//           navigation.navigate("donatorMain", {
+//             id: User.uid,
+//             email: User.email,
+//           });
+//         } else if (data.status == "Donatee") {
+//           //console.log("donee");
+//           navigation.navigate("doneeMain", {
+//             id: User.uid,
+//             email: User.email,
+//           });
+//         }
+//       }
+//  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PROFILE</Text>
-      <Text style={styles.info}>INFO :{data.user}</Text>
+      <Text style={styles.info}>USERNAME: {data.user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
-      </Text>
-      <Text style={styles.logout} onPress={changeAccount} >
-        change
       </Text>
     </View>
   );
