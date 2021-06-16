@@ -16,7 +16,8 @@ export default function profileScreen({ navigation }) {
   }
 
   return (
-    <View style={StyleSheet.container}>
+    <View style={styles.container}>
+        <Text style= {styles.header}>PROFILE</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
@@ -26,14 +27,19 @@ export default function profileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    //justifyContent: "center",
     padding: 24,
     backgroundColor: "rgba(48, 64, 87, 1)",
   },
   logout: {
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: "bold",
     marginBottom: 24,
-    color: "black",
+    color: "white",
   },
+  header:{
+      fontSize: 36,
+      color: "white",
+      textAlign: "center",
+  }
 });
