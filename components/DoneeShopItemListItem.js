@@ -21,7 +21,6 @@ export default function DoneeShopItemListItem({ name, price, imgSrc, available }
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.price}>${price.toFixed(2)}</Text>
         <Text style={styles.price}>Available: {available}</Text>
       </View>
     </View>

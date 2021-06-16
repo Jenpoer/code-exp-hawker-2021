@@ -25,14 +25,20 @@ export default function LoginScreen({ navigation }) {
       email,
       password
     );
-    console.log(userCredential);
-    //navigation.navigate("donatorMain");
-    // if(data.staus == "Donor"){
-    //   
-    // }else{
-    //   navigation.navigate("doneeMain");
-    // }
-    
+    if(userCredential) {
+      const userRef = db.doc(userCredential.user.uid);
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        console.log('No such document!');
+      } else {
+        const userData = doc.data();
+        if(userData.status === "Donator") {
+          navigation.navigate("donatorMain");
+        } else {
+          navigation.navigate("doneeMain");
+        }
+      }
+    }
   }
 
   return (

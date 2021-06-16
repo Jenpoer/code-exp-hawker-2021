@@ -70,7 +70,7 @@ function ShopItemsList({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("AddToCart", { ...route.params, ...item, userData })
+          navigation.navigate("DonateeAddToCart", { ...route.params, ...item, userData })
         }
       >
         <DoneeShopItemListItem

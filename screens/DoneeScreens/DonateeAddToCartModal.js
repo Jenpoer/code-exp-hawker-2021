@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import IncDecButton from "../../components/IncDecButton";
 import firebase from "../../database/firebaseDB";
-export default function AddToCartModal({ route, navigation }) {
+export default function DonateeAddToCartModal({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
   const db = firebase
     .firestore()
@@ -22,6 +22,7 @@ export default function AddToCartModal({ route, navigation }) {
     name,
     description,
     price,
+    available,
     userData
   } = route.params;
 
@@ -55,7 +56,7 @@ export default function AddToCartModal({ route, navigation }) {
         <Text style={styles.caption}>{description}</Text>
         <View style={styles.columns}>
           <View style={styles.left}>
-            <Text style={styles.price}>${(price * quantity).toFixed(2)}</Text>
+            <Text style={styles.price}>{available - quantity}</Text>
           </View>
           <View style={styles.right}>
             <IncDecButton
@@ -67,7 +68,7 @@ export default function AddToCartModal({ route, navigation }) {
             <Text style={styles.price}>{quantity}</Text>
             <IncDecButton
               character="+"
-              onPress={() => setQuantity(quantity + 1)}
+              onPress={() => {if(quantity < available) setQuantity(quantity + 1)}}
             />
           </View>
         </View>
