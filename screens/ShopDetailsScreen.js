@@ -40,7 +40,9 @@ function ShopItemsList({ route, navigation }) {
   function renderItem({ item }) {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("AddToCart", { ...item })}
+        onPress={() =>
+          navigation.navigate("AddToCart", { ...route.params, ...item })
+        }
       >
         <ShopItemListItem name={item.name} price={item.price} />
       </TouchableOpacity>
@@ -89,7 +91,13 @@ export default function ShopDetailsScreen({ route, navigation }) {
       <ShopDetailsStack.Screen
         name="AddToCart"
         component={AddToCartModal}
-        options={{ headerShown: false }}
+        options={{
+          title: "Donate Item",
+          headerStyle: {
+            marginBottom: "auto",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+          },
+        }}
       />
     </ShopDetailsStack.Navigator>
   );

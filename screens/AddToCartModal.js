@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import IncDecButton from "../components/IncDecButton";
 
-export default function AddToCartModal({ name, price, description }) {
+export default function AddToCartModal({ route, navigation }) {
   const [quantity, setQuantity] = useState(1);
+  const { shopName, hawkerId, hawkerName, hawkerAddress, name, description, price } = route.params;
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
@@ -17,7 +18,7 @@ export default function AddToCartModal({ name, price, description }) {
         <Text style={styles.caption}>{description}</Text>
         <View style={styles.columns}>
           <View style={styles.left}>
-            <Text style={styles.price}>${price * quantity}</Text>
+            <Text style={styles.price}>${(price * quantity).toFixed(2)}</Text>
           </View>
           <View style={styles.right}>
             <IncDecButton
@@ -69,12 +70,16 @@ const styles = StyleSheet.create({
   left: {
     flexBasis: "50%",
     paddingTop: 5,
+    justifyContent: "center",
+    alignItems: "center"
   },
   right: {
     display: "flex",
     flexDirection: "row",
     flexBasis: "50%",
     paddingTop: 5,
+    justifyContent: "center",
+    alignItems: "center"
   },
   addressContainer: {
     display: "flex",
