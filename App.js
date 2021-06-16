@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import signupscreen from "./screens/signupscreen";
-import ShopDetailsScreen from "./screens/ShopDetailsScreen";
+import ShopDetailsScreen from "./screens/DonatorScreens/ShopDetailsScreen";
 import loginScreen from "./screens/loginScreen";
-import DonatorMainScreen from "./screens/DonatorMainScreen";
+import DonatorMainScreen from "./screens/DonatorScreens/DonatorMainScreen";
 import eligibilityScreen from "./screens/EligibilityScreen";
 import DoneeMainScreen from "./screens/DoneeMainScreen";
 import profileScreen from "./screens/profileScreen"

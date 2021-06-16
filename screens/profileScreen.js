@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
-import ShopDetailsScreen from "./ShopDetailsScreen.js";
+import ShopDetailsScreen from "./DonatorScreens/ShopDetailsScreen.js";
 import firebase from "../database/firebaseDB.js";
 import { DrawerLayoutAndroid } from "react-native-gesture-handler";
 

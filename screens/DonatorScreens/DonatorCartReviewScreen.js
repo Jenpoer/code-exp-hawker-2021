@@ -12,9 +12,9 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import deleteCollection from "../utility/deleteCollection";
+import deleteCollection from "../../utility/deleteCollection";
 import moment from "moment";
-import firebase from "../database/firebaseDB";
+import firebase from "../../database/firebaseDB";
 
 export default function DonatorCartReviewScreen({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
@@ -46,9 +46,7 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
   // Update whenever cartData changes
   useEffect(() => {
     setTotalPrice(0);
-    cartData.forEach((order) =>
-      setTotalPrice(totalPrice + order.price)
-    );
+    cartData.forEach((order) => setTotalPrice(totalPrice + order.price));
   }, [cartData]);
 
   const { shopId, shopName, imgSrc, hawkerId, hawkerName, hawkerAddress } =
@@ -60,9 +58,6 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
     setCurrentDate(date);
   }, []);
 
-  // Delete all items in collection function
-  
-
   function confirmPayment() {
     // Add all orders into History
     if (cartData.length != 0) {
@@ -71,9 +66,8 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
         .set({ hawkerId: hawkerId, shopId: shopId, items: cartData });
     }
 
-    setCartData([]);
-
     // Delete all items from cart
+    setCartData([]);
     deleteCollection(firebase.firestore(), "userinfo/" + user + "/cart", 5);
 
     // Navigate to confirm page after a short time out

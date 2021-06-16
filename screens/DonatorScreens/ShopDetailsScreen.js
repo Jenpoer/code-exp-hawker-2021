@@ -9,11 +9,11 @@ import {
   Button,
   Modal,
 } from "react-native";
-import ShopItemListItem from "../components/ShopItemListItem";
-import ShopDetailsHeader from "../components/ShopDetailsHeader";
+import ShopItemListItem from "../../components/ShopItemListItem";
+import ShopDetailsHeader from "../../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
-import AddToCartModal from "./AddToCartModal";
-import firebase from "../database/firebaseDB";
+import AddToCartModal from "../AddToCartModal";
+import firebase from "../../database/firebaseDB";
 import DonatorCartReviewScreen from "./DonatorCartReviewScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";

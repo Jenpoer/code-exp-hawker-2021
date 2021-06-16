@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Header,
@@ -11,6 +11,7 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import firebase from "../../database/firebaseDB";
 
 const DATA = [
   {
@@ -65,17 +66,55 @@ const DATA = [
   },
 ];
 
+const db = firebase.firestore();
+
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <View style={[styles.item, backgroundColor]}>
-    <Text style={[styles.title, textColor]}>{item.title}</Text>
-    <Text style={[styles.stall, textColor]}>{item.stall}</Text>
-    <Text style={[styles.dish, textColor]}>{item.dish}</Text>
-    <Text style={[styles.price, textColor]}>{item.price}</Text>
-    <Text style={[styles.claimdate, textColor]}>{item.claimdate}</Text>
+    <Text style={[styles.title, textColor]}>{item.hawkerName}</Text>
+    <Text style={[styles.stall, textColor]}>{item.shopName}</Text>
+    {item.items.map((dish) => (
+      <Text style={[styles.dish, textColor]}>{dish.name},</Text>
+    ))}
+    <Text style={[styles.price, textColor]}>{item.totalPrice}</Text>
+    <Text style={[styles.claimdate, textColor]}>{item.date}</Text>
   </View>
 );
 
 export default function DonatorHistory() {
+  const user = firebase.auth().currentUser.uid;
+  const historyDB = db.collection("userinfo/" + user + "/history");
+  const [historyData, setHistoryData] = useState([]);
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = historyDB.onSnapshot((collection) => {
+      const orders = collection.docs.map((doc) => {
+        const { hawkerId, shopId, items } = doc.data();
+        const hawkerRef = db.collection("hawker").doc(hawkerId).get();
+        
+
+        const shopRef = db
+          .collection("hawker/" + hawkerId + "/shops")
+          .doc(shopId)
+          .get();
+
+        return {
+          date: doc.id,
+          hawkerName: "hawkerName",
+          shopName: "shopName",
+          items: items,
+          totalPrice: 0,
+        };
+      });
+
+      setHistoryData(orders);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const renderItem = ({ item }) => {
     const backgroundColor = "#E2814E";
     const color = "white";
@@ -95,7 +134,7 @@ export default function DonatorHistory() {
         <Text style={styles.header}> Donation History</Text>
       </View>
       <FlatList
-        data={DATA}
+        data={historyData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

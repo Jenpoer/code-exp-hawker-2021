@@ -8,11 +8,11 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import ShopListItem from "../components/ShopListItem";
+import ShopListItem from "../../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopDetailsScreen from "./ShopDetailsScreen.js";
 
-import firebase from "../database/firebaseDB.js";
+import firebase from "../../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
   {

@@ -13,7 +13,7 @@ import {
   TextInput,
 } from "react-native";
 //import filter from 'lodash.filter';
-import firebase from "../database/firebaseDB.js";
+import firebase from "../../database/firebaseDB.js";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopListScreen from "./ShopListScreen";
 
