@@ -32,7 +32,6 @@ export default function profileScreen({ navigation }) {
     if(user != null){
         setData2(user)
     db.doc(user).get().then(snapshot => setData(snapshot.data()))
-
     }
     // const unsubscribe = db
     // .onSnapshot((collection) => {
@@ -53,7 +52,7 @@ export default function profileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PROFILE</Text>
-      <Text style={styles.logout}>INFO :{data.user}</Text>
+      <Text style={styles.info}>INFO :{data.user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
@@ -68,6 +67,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(48, 64, 87, 1)",
   },
   logout: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 24,
+    color: "white",
+    textDecorationLine: 'underline',
+  },
+  info:{
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 24,
