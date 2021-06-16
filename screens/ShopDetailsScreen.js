@@ -14,6 +14,9 @@ import ShopDetailsHeader from "../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddToCartModal from "./AddToCartModal";
 import firebase from "../database/firebaseDB";
+import DonatorCartReviewScreen from "./DonatorCartReviewScreen";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
@@ -29,11 +32,11 @@ function ShopItemsList({ route, navigation }) {
     headerImgSrc,
   } = route.params;
 
+  const [foodData, setFoodData] = useState([]);
+
   const db = firebase
     .firestore()
     .collection("hawker/" + hawkerId + "/shops/" + shopId + "/menu");
-
-  const [foodList, setFoodList] = useState([]);
 
   // Load Firebase data on start
   useEffect(() => {
@@ -45,7 +48,7 @@ function ShopItemsList({ route, navigation }) {
         };
       });
 
-      setFoodList(foodMenu);
+      setFoodData(foodMenu);
     });
 
     return () => {
@@ -79,7 +82,7 @@ function ShopItemsList({ route, navigation }) {
       />
       <FlatList
         style={{ width: "100%" }}
-        data={foodList}
+        data={foodData}
         renderItem={renderItem}
       />
     </ScrollView>
@@ -90,9 +93,11 @@ const ShopDetailsStack = createStackNavigator();
 
 export default function ShopDetailsScreen({ route, navigation }) {
   const {
+    shopId,
     shopName,
     itemTags,
     preferredNo,
+    imgSrc,
     hawkerId,
     hawkerName,
     hawkerAddress,
@@ -103,17 +108,35 @@ export default function ShopDetailsScreen({ route, navigation }) {
         name="ListOfItems"
         component={ShopItemsList}
         initialParams={{
+          shopId: shopId,
           shopName: shopName,
+          hawkerId: hawkerId,
           hawkerName: hawkerName,
           hawkerAddress: hawkerAddress,
+          headerImgSrc: imgSrc
         }}
-        options={{ title: shopName, headerShown: false }}
+        options={{ title: shopName,
+          headerRight: () => (
+          <TouchableOpacity
+            style={{ marginRight: 30 }}
+            onPress={() => navigation.navigate("DonatorCartReview")}
+          >
+            <FontAwesomeIcon icon={faShoppingCart} size={20} />
+          </TouchableOpacity>
+        ), }}
       />
       <ShopDetailsStack.Screen
         name="AddToCart"
         component={AddToCartModal}
         options={{
           title: "Donate Item",
+        }}
+      />
+      <ShopDetailsStack.Screen
+        name="DonatorCartReview"
+        component={DonatorCartReviewScreen}
+        options={{
+          title: "Donation Box",
           headerStyle: {
             marginBottom: "auto",
             backgroundColor: "rgba(255, 255, 255, 0.5)",

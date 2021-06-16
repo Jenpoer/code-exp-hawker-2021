@@ -11,8 +11,7 @@ import {
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopDetailsScreen from "./ShopDetailsScreen.js";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+
 import firebase from "../database/firebaseDB.js";
 
 const SAMPLE_SHOPS = [
@@ -163,12 +162,7 @@ export default function ShopListScreen({ route, navigation }) {
         name="ShopDetails"
         component={ShopDetailsScreen}
         options={{
-          title: "Menu",
-          headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 30 }}>
-              <FontAwesomeIcon icon={faShoppingCart} size={20} />
-            </TouchableOpacity>
-          ),
+          headerShown: false
         }}
       />
     </ShopListStack.Navigator>
