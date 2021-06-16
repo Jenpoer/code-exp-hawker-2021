@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,30 +13,45 @@ import ShopItemListItem from "../components/ShopItemListItem";
 import ShopDetailsHeader from "../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddToCartModal from "./AddToCartModal";
-
+import firebase from "../database/firebaseDB";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
 // 2 - Modal popup of the items u wanna buy WHICH IS ANOTHER STACK NAVIGATOR TO THE "CART"
 
 function ShopItemsList({ route, navigation }) {
-  const { shopName, hawkerId, hawkerName, hawkerAddress } = route.params;
-  const SAMPLE_FOOD = [
-    {
-      id: 1,
-      name: "Chicken Rice",
-      price: 2.5,
-      description: "Good chicken rice as usual.",
-    },
-    {
-      id: 2,
-      name: "Roasted Chicken Rice",
-      price: 3,
-      description: "Like chicken rice but roasted",
-    },
-  ];
+  const {
+    shopId,
+    shopName,
+    hawkerId,
+    hawkerName,
+    hawkerAddress,
+    headerImgSrc,
+  } = route.params;
 
-  const [foodList, setFoodList] = useState(SAMPLE_FOOD);
+  const db = firebase
+    .firestore()
+    .collection("hawker/" + hawkerId + "/shops/" + shopId + "/menu");
+
+  const [foodList, setFoodList] = useState([]);
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = db.onSnapshot((collection) => {
+      const foodMenu = collection.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      setFoodList(foodMenu);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   function renderItem({ item }) {
     return (
@@ -45,7 +60,11 @@ function ShopItemsList({ route, navigation }) {
           navigation.navigate("AddToCart", { ...route.params, ...item })
         }
       >
-        <ShopItemListItem name={item.name} price={item.price} />
+        <ShopItemListItem
+          name={item.name}
+          price={item.price}
+          imgSrc={item.imgSrc}
+        />
       </TouchableOpacity>
     );
   }
@@ -56,6 +75,7 @@ function ShopItemsList({ route, navigation }) {
         shopName={shopName}
         hawkerName={hawkerName}
         hawkerAddress={hawkerAddress}
+        imgSrc={headerImgSrc}
       />
       <FlatList
         style={{ width: "100%" }}

@@ -1,13 +1,10 @@
-import React,{useState, useEffect} from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ShopDetailsScreen from "./ShopDetailsScreen.js";
 import firebase from "../database/firebaseDB.js";
+import { DrawerLayoutAndroid } from "react-native-gesture-handler";
 
 const db = firebase.firestore().collection("userinfo");
 
@@ -55,9 +52,8 @@ export default function profileScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-        <Text style= {styles.header}>PROFILE</Text>
-        
-        <Text style={styles.logout}>info :{data.user} </Text>
+      <Text style={styles.header}>PROFILE</Text>
+      <Text style={styles.logout}>INFO :{data.user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
@@ -77,9 +73,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     color: "white",
   },
-  header:{
-      fontSize: 36,
-      color: "white",
-      textAlign: "center",
-  }
+  header: {
+    fontSize: 36,
+    color: "white",
+    textAlign: "center",
+  },
 });
