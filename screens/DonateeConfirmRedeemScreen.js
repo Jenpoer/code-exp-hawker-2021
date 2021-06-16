@@ -2,7 +2,10 @@ import React from "react";
 import { Text, View, Image, StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function DoneeConfirmRedeemScreen() {
+
+export default function DonateeConfirmRedeemScreen() {
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.fillerContainer}></View>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, Image, StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function DonatorConfirmPaymentScreen() {
+export default function DonatorConfirmPaymentScreen({ route }) {
+
   return (
     <View style={styles.container}>
       <View style={styles.fillerContainer}></View>
@@ -13,9 +14,7 @@ export default function DonatorConfirmPaymentScreen() {
             uri: "https://lh3.googleusercontent.com/proxy/NOcG0vFHwf7j1HXcQ2KkuMlDu1g7_Ln0wN6d4EQEE-A2w6mFm6jFqnEe6So5F7JMaLHB1ZZBmOldxmTtJ0X7k8tBRWLayhI",
           }}
         ></Image>
-        <Text style={styles.text}>
-          Your payment has been made!{" "}
-        </Text>
+        <Text style={styles.text}>Your payment has been made! </Text>
       </View>
       <View style={styles.fillerContainer}></View>
     </View>
