@@ -20,6 +20,15 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
   const db = firebase.firestore().collection("userinfo/" + user + "/cart");
   const db2 = firebase.firestore().collection("userinfo/" + user + "/history");
+  const db3 = firebase
+    .firestore()
+    .collection(
+      "hawker/" +
+        route.params.hawkerId +
+        "/shops/" +
+        route.params.shopId +
+        "/menu"
+    );
 
   const [cartData, setCartData] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -65,6 +74,12 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
         .doc(currentDate)
         .set({ hawkerId: hawkerId, shopId: shopId, items: cartData });
     }
+
+    // Add to "available" field
+    cartData.forEach((order) => {
+      const increment = firebase.firestore.FieldValue.increment(order.quantity);
+      db3.doc(order.itemId).update({ available: increment });
+    });
 
     // Delete all items from cart
     setCartData([]);

@@ -9,16 +9,16 @@ import {
   Button,
   Modal,
 } from "react-native";
-import ShopItemListItem from "../../components/ShopItemListItem";
+import DoneeShopItemListItem from "../../components/DoneeShopItemListItem";
 import ShopDetailsHeader from "../../components/ShopDetailsHeader";
 import { createStackNavigator } from "@react-navigation/stack";
-import AddToCartModal from "./AddToCartModal";
+import DonateeAddToCartModal from "./DonateeAddToCartModal";
 import firebase from "../../database/firebaseDB";
-import DonatorCartReviewScreen from "./DonatorCartReviewScreen";
+import DonateeCartReviewScreen from "./DonateeCartReviewScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import DonatorConfirmPaymentScreen from "./DonatorConfirmPaymentScreen";
+import DonateeConfirmRedeemScreen from "./DonateeConfirmRedeemScreen";
 
 // Make a modal stack navigator
 // 1 - Shop Details Item Screen with FlatList of all items
@@ -73,7 +73,7 @@ function ShopItemsList({ route, navigation }) {
           navigation.navigate("AddToCart", { ...route.params, ...item, userData })
         }
       >
-        <ShopItemListItem
+        <DoneeShopItemListItem
           name={item.name}
           price={item.price}
           imgSrc={item.imgSrc}
@@ -131,24 +131,24 @@ export default function ShopDetailsScreen({ route, navigation }) {
           headerRight: () => (
           <TouchableOpacity
             style={{ marginRight: 30 }}
-            onPress={() => navigation.navigate("DonatorCartReview", {...route.params})}
+            onPress={() => navigation.navigate("DonateeCartReview", {...route.params})}
           >
             <FontAwesomeIcon icon={faShoppingCart} size={20} />
           </TouchableOpacity>
         ), }}
       />
       <ShopDetailsStack.Screen
-        name="AddToCart"
-        component={AddToCartModal}
+        name="DonateeAddToCart"
+        component={DonateeAddToCartModal}
         options={{
-          title: "Donate Item",
+          title: "Claim Item",
         }}
       />
       <ShopDetailsStack.Screen
-        name="DonatorCartReview"
-        component={DonatorCartReviewScreen}
+        name="DonateeCartReview"
+        component={DonateeCartReviewScreen}
         options={{
-          title: "Donation Box",
+          title: "Claim Cart",
           headerStyle: {
             marginBottom: "auto",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -156,8 +156,8 @@ export default function ShopDetailsScreen({ route, navigation }) {
         }}
       />
       <ShopDetailsStack.Screen
-        name="DonatorConfirmPayment"
-        component={DonatorConfirmPaymentScreen}
+        name="DonateeConfirmRedeem"
+        component={DonateeConfirmRedeemScreen}
         options={{
           title: "Payment Confirmed!",
           headerStyle: {

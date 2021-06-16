@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import IncDecButton from "../components/IncDecButton";
-import firebase from "../database/firebaseDB";
+import IncDecButton from "../../components/IncDecButton";
+import firebase from "../../database/firebaseDB";
 export default function AddToCartModal({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
   const db = firebase
@@ -22,7 +22,9 @@ export default function AddToCartModal({ route, navigation }) {
     name,
     description,
     price,
+    userData
   } = route.params;
+
 
   function addToCart() {
     const order = {

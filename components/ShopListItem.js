@@ -34,10 +34,7 @@ export default function ShopListItem({
           </View>
         </View>
         <View style={styles.right}>
-          <FontAwesomeIcon style={styles.icon} icon={faStar}></FontAwesomeIcon>
-          <Text style={styles.preference}>
-            {preferredNo} people has this on their wishlist!
-          </Text>
+          
         </View>
       </View>
     </View>

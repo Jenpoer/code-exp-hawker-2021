@@ -3,21 +3,20 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import signupscreen from "./screens/signupscreen";
-import ShopDetailsScreen from "./screens/DonatorScreens/ShopDetailsScreen";
 import loginScreen from "./screens/loginScreen";
 import DonatorMainScreen from "./screens/DonatorScreens/DonatorMainScreen";
 import eligibilityScreen from "./screens/EligibilityScreen";
-import DoneeMainScreen from "./screens/DoneeMainScreen";
-import profileScreen from "./screens/profileScreen"
+import DoneeMainScreen from "./screens/DoneeScreens/DoneeMainScreen";
+import profileScreen from "./screens/profileScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none" mode="modal">
-      <Stack.Screen name="donatorMain" component={DonatorMainScreen} />
-      <Stack.Screen name="doneeMain" component={DoneeMainScreen} />
-      <Stack.Screen name="profileScreen" component={profileScreen} />
+        <Stack.Screen name="donatorMain" component={DonatorMainScreen} />
+        <Stack.Screen name="doneeMain" component={DoneeMainScreen} />
+        <Stack.Screen name="profileScreen" component={profileScreen} />
         <Stack.Screen
           name="Login"
           component={loginScreen}
@@ -56,7 +55,7 @@ export default function App() {
             },
           }}
         />
-        <Stack.Screen name="eligibilityScreen" component={eligibilityScreen}/>
+        <Stack.Screen name="eligibilityScreen" component={eligibilityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
