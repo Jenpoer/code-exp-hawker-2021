@@ -18,6 +18,7 @@ export default function profileScreen({ navigation }) {
   return (
     <View style={styles.container}>
         <Text style= {styles.header}>PROFILE</Text>
+        <Text>Name : {user}</Text>
       <Text style={styles.logout} onPress={logout}>
         logout
       </Text>
