@@ -43,7 +43,7 @@ function ShopItemsList({ route, navigation }) {
     const unsubscribe = db.onSnapshot((collection) => {
       const foodMenu = collection.docs.map((doc) => {
         return {
-          id: doc.id,
+          itemId: doc.id,
           ...doc.data(),
         };
       });
@@ -119,7 +119,7 @@ export default function ShopDetailsScreen({ route, navigation }) {
           headerRight: () => (
           <TouchableOpacity
             style={{ marginRight: 30 }}
-            onPress={() => navigation.navigate("DonatorCartReview")}
+            onPress={() => navigation.navigate("DonatorCartReview", {...route.params})}
           >
             <FontAwesomeIcon icon={faShoppingCart} size={20} />
           </TouchableOpacity>

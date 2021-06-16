@@ -1,35 +1,146 @@
-import React, { useState } from "react";
-import {Switch, View, Header, ScrollView, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  Switch,
+  View,
+  Header,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from "react-native";
+import moment from "moment";
+import firebase from "../database/firebaseDB";
 
+const dishes = [
+  "Roasted Chicken Rice x 2",
+  "Steamed Chicken Rice x 2",
+  "Roasted Duck Rice x 3",
+  "Whole Chicken x 2",
+  "Chicken Noodle x 2",
+  "Duck Noodle x 2",
+];
 
-const dishes = ["Roasted Chicken Rice x 2", "Steamed Chicken Rice x 2", "Roasted Duck Rice x 3", "Whole Chicken x 2", "Chicken Noodle x 2", "Duck Noodle x 2" ];
+export default function DonatorCartReviewScreen({ route }) {
+  const user = firebase.auth().currentUser.uid;
+  const db = firebase
+    .firestore()
+    .collection("userinfo")
+    .doc(user)
+    .collection("cart");
 
-export default function DonatorCartReviewScreen() {
+  const [cartData, setCartData] = useState([]);
+  const [currentDate, setCurrentDate] = useState("");
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = db.onSnapshot((collection) => {
+      const orders = collection.docs.map((doc) => {
+        return {
+          itemId: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      setCartData(orders);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const { shopId, shopName, imgSrc, hawkerId, hawkerName, hawkerAddress } =
+    route.params;
+
+  useEffect(() => {
+    var date = moment().format("MMMM Do YYYY, h:mm a");
+    setCurrentDate(date);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headercontainer}>
-        <Text style = {styles.header}> Confirmation Page </Text>
+        <Text style={styles.header}> Confirmation Page </Text>
       </View>
-      <View style = {styles.receipt}>
-        <Text style = {{color: "white", fontSize: 18, padding: 10, textAlign: "center", fontWeight: "Bold"}}> Sembawang Hills Food Centre </Text>
-        <Text style = {{color: "white", fontSize: 18, textAlign: "center", padding: 10}}> Chicken Rice Store </Text>
-        <View style = {styles.separator}></View>
-        <Text style = {{color: "white", fontSize: 18, padding: 5, textAlign: "center"}}> 2016-01-04 10:34:23 </Text>
-        <View style = {styles.separator}></View>
+      <View style={styles.receipt}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 18,
+            padding: 10,
+            textAlign: "center",
+            fontWeight: "Bold",
+          }}
+        >
+          {" "}
+          {hawkerName}{" "}
+        </Text>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 18,
+            textAlign: "center",
+            padding: 10,
+          }}
+        >
+          {" "}
+          {shopName}{" "}
+        </Text>
+        <View style={styles.separator}></View>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 18,
+            padding: 5,
+            textAlign: "center",
+          }}
+        >
+          {" "}
+          {currentDate}{" "}
+        </Text>
+        <View style={styles.separator}></View>
         <ScrollView style={styles.scrollView}>
-         {dishes.map((dish) => (<Text  style = {{padding: 10, color: "white", textAlign: "center"}} >{dish}</Text>))}
+          {cartData.map((dish) => (
+            <Text style={{ padding: 10, color: "white", textAlign: "center" }}>
+              {dish.name} x {dish.quantity}
+            </Text>
+          ))}
         </ScrollView>
-        <View style = {styles.separator}></View>
-        <Text style = {{textAlign: "center", fontWeight: 500, fontSize: 15, color: "white", padding: 10}}> Total Payment: $40 </Text>
-        
-        <TouchableOpacity style = {styles.button}>
-          <Text style = {{textAlign: "center", fontWeight: 500, fontSize: 15, color: "white"}}> Confirm </Text>
+        <View style={styles.separator}></View>
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: 500,
+            fontSize: 15,
+            color: "white",
+            padding: 10,
+          }}
+        >
+          {" "}
+          Total Payment: $40{" "}
+        </Text>
+
+        <TouchableOpacity style={styles.button}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: 500,
+              fontSize: 15,
+              color: "white",
+            }}
+          >
+            {" "}
+            Confirm{" "}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   headercontainer: {
@@ -43,12 +154,12 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(48, 64, 87, 1)",
   },
   header: {
-    fontSize: 23, 
+    fontSize: 23,
     textAlign: "center",
     color: "white",
   },
   receipt: {
-    alignItems:"center",
+    alignItems: "center",
     backgroundColor: "#414F64",
     width: "250px",
     height: "400px",
@@ -63,13 +174,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "150px",
     textAlign: "center",
-   
-
   },
   separator: {
-    height: 3, 
-    width: "100%", 
+    height: 3,
+    width: "100%",
     backgroundColor: "#E2814E",
-  }
-
+  },
 });

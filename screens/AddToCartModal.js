@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import IncDecButton from "../components/IncDecButton";
-
+import firebase from "../database/firebaseDB";
 export default function AddToCartModal({ route, navigation }) {
+  const user = firebase.auth().currentUser.uid;
+  const db = firebase
+    .firestore()
+    .collection("userinfo")
+    .doc(user)
+    .collection("cart");
+
   const [quantity, setQuantity] = useState(1);
-  const { shopName, hawkerId, hawkerName, hawkerAddress, name, description, price } = route.params;
+
+  const {
+    shopName,
+    hawkerId,
+    hawkerName,
+    hawkerAddress,
+    itemId,
+    name,
+    description,
+    price,
+  } = route.params;
+
+  function addToCart() {
+    const order = {
+      name: name,
+      price: quantity * price,
+      quantity: quantity,
+    };
+    db.doc(itemId).set(order);
+  }
+
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
@@ -34,7 +61,7 @@ export default function AddToCartModal({ route, navigation }) {
             />
           </View>
         </View>
-        <TouchableOpacity style={styles.confirmButton}>
+        <TouchableOpacity style={styles.confirmButton} onPress={addToCart}>
           <Text style={styles.buttonText}>DONATE</Text>
         </TouchableOpacity>
       </View>
@@ -71,7 +98,7 @@ const styles = StyleSheet.create({
     flexBasis: "50%",
     paddingTop: 5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   right: {
     display: "flex",
@@ -79,7 +106,7 @@ const styles = StyleSheet.create({
     flexBasis: "50%",
     paddingTop: 5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   addressContainer: {
     display: "flex",
