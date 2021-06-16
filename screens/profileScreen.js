@@ -70,30 +70,6 @@ export default function profileScreen({ navigation }) {
       }
  }
 
-
-  useEffect(() => {
-    const user = firebase.auth().currentUser.uid;
-    if(user != null){
-        //setData2(user)
-    db.doc(user).get().then(snapshot => setData(snapshot.data()))
-    //console.log(data.user)
-    }
-    // const unsubscribe = db
-    // .onSnapshot((collection) => {
-    //     const updatedData = collection.docs.map((doc) => {
-    //         const data = doc.data(user);
-
-    //     });
-    // setData(updatedData.email)
-    // });
-    // return () => { 
-    //           unsubscribe();
-    //         };
-    //  .get()
-    //  setData2(databaseUSer);
-  
-});
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>PROFILE</Text>
