@@ -12,16 +12,14 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import deleteCollection from "../utility/deleteCollection";
 import moment from "moment";
 import firebase from "../database/firebaseDB";
 
 export default function DonatorCartReviewScreen({ route, navigation }) {
   const user = firebase.auth().currentUser.uid;
-  const db = firebase
-    .firestore()
-    .collection("userinfo")
-    .doc(user)
-    .collection("cart");
+  const db = firebase.firestore().collection("userinfo/" + user + "/cart");
+  const db2 = firebase.firestore().collection("userinfo/" + user + "/history");
 
   const [cartData, setCartData] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -38,14 +36,20 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
       });
 
       setCartData(orders);
-
-      orders.forEach(order => setTotalPrice(totalPrice + order.quantity * order.price))
     });
 
     return () => {
       unsubscribe();
     };
   }, []);
+
+  // Update whenever cartData changes
+  useEffect(() => {
+    setTotalPrice(0);
+    cartData.forEach((order) =>
+      setTotalPrice(totalPrice + order.price)
+    );
+  }, [cartData]);
 
   const { shopId, shopName, imgSrc, hawkerId, hawkerName, hawkerAddress } =
     route.params;
@@ -56,6 +60,28 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
     setCurrentDate(date);
   }, []);
 
+  // Delete all items in collection function
+  
+
+  function confirmPayment() {
+    // Add all orders into History
+    if (cartData.length != 0) {
+      db2
+        .doc(currentDate)
+        .set({ hawkerId: hawkerId, shopId: shopId, items: cartData });
+    }
+
+    setCartData([]);
+
+    // Delete all items from cart
+    deleteCollection(firebase.firestore(), "userinfo/" + user + "/cart", 5);
+
+    // Navigate to confirm page after a short time out
+    clearTimeout(timeoutId);
+    const timeoutId = setTimeout(() => {
+      navigation.navigate("DonatorConfirmPayment");
+    }, 250);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -120,7 +146,7 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
           Total Payment: {totalPrice.toFixed(2)}{" "}
         </Text>
 
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("DonatorConfirmPayment")}}>
+        <TouchableOpacity style={styles.button} onPress={confirmPayment}>
           <Text
             style={{
               textAlign: "center",
