@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTag, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 
-export default function ShopListItem({ shopName, itemTags, preferredNo, imgSrc }) {
+export default function ShopListItem({
+  shopName,
+  itemTags,
+  preferredNo,
+  imgSrc,
+}) {
   let [fontsLoaded] = useFonts({
     "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
@@ -24,7 +29,8 @@ export default function ShopListItem({ shopName, itemTags, preferredNo, imgSrc }
           <View style={styles.addressContainer}>
             <FontAwesomeIcon style={styles.icon} icon={faTag}></FontAwesomeIcon>
             {itemTags.map((itemTag) => (
-            <Text style={styles.address}>{itemTag},</Text>))}
+              <Text style={styles.address}>{itemTag},</Text>
+            ))}
           </View>
         </View>
         <View style={styles.right}>

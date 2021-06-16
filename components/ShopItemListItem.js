@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTag, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useFonts, Inter_600SemiBold } from "@expo-google-fonts/inter";
 
-export default function ShopItemListItem({ name, price }) {
+export default function ShopItemListItem({ name, price, imgSrc }) {
   let [fontsLoaded] = useFonts({
     "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
   });
@@ -15,7 +15,7 @@ export default function ShopItemListItem({ name, price }) {
         <Image
           style={styles.image}
           source={{
-            uri: "https://www.healthhub.sg/sites/assets/Assets/Categories/Pregnancy/Article008_images_mainimage.jpg",
+            uri: `${imgSrc}`,
           }}
         />
       </View>

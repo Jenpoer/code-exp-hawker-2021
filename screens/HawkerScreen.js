@@ -19,8 +19,6 @@ import ShopListScreen from "./ShopListScreen";
 
 const db = firebase.firestore().collection("hawker");
 
-async function urlConverter(uri) {}
-
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
     <Image style={{ width: 193, height: 110 }} source={item.uri} />
@@ -56,6 +54,19 @@ function HawkerList({ navigation }) {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    const hawkers = fullData;
+
+    hawkers.map(async (hawker) => {
+      const ref = firebase.storage().refFromURL(hawker.uri);
+      const url = await ref.getDownloadURL();
+      hawker.uri = url;
+    });
+
+    setFullData(hawkers);
+      
+  }, );
 
   function renderHeader() {
     return (

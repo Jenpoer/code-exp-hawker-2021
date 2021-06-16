@@ -34,6 +34,28 @@ const SAMPLE_SHOPS = [
 
 function ShopList({ route, navigation }) {
   const [query, setQuery] = useState("");
+  const [shopData, setShopData] = useState([]);
+  const db = firebase
+    .firestore()
+    .collection("hawker/" + route.params.hawkerId + "/shops");
+
+  // Load Firebase data on start
+  useEffect(() => {
+    const unsubscribe = db.onSnapshot((collection) => {
+      const hawkerShops = collection.docs.map((doc) => {
+        return {
+          shopId: doc.id,
+          ...doc.data(),
+        };
+      });
+
+      setShopData(hawkerShops);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   function renderHeader() {
     return (
@@ -64,7 +86,10 @@ function ShopList({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ShopDetails", { ...item, ...route.params })
+          navigation.navigate("ShopDetails", {
+            ...item,
+            ...route.params,
+          })
         }
       >
         <ShopListItem
@@ -81,7 +106,7 @@ function ShopList({ route, navigation }) {
     <View style={styles.container}>
       <FlatList
         style={{ width: "100%" }}
-        data={SAMPLE_SHOPS}
+        data={shopData}
         renderItem={renderItem}
         ListHeaderComponent={renderHeader}
       />

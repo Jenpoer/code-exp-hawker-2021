@@ -9,13 +9,14 @@ export default function ShopDetailsHeader({
   shopName,
   hawkerName,
   hawkerAddress,
+  imgSrc,
 }) {
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
         source={{
-          uri: "https://www.treksplorer.com/wp-content/uploads/best-hawker-centres-singapore.jpg",
+          uri: `${imgSrc}`,
         }}
       />
       <View style={styles.textContainer}>
