@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Button,
+  TextInput,
 } from "react-native";
 import ShopListItem from "../components/ShopListItem";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -32,6 +33,33 @@ const SAMPLE_SHOPS = [
 ];
 
 function ShopList({ route, navigation }) {
+  const [query, setQuery] = useState("");
+
+  function renderHeader() {
+    return (
+      <View
+        style={{
+          backgroundColor: "#fff",
+          padding: 5,
+          marginVertical: 5,
+          borderRadius: 20,
+          width: 250,
+          alignSelf: "center",
+        }}
+      >
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          clearButtonMode="always"
+          value={query}
+          onChangeText={(queryText) => handleSearch(queryText)}
+          placeholder="Search"
+          style={{ backgroundColor: "#fff", paddingHorizontal: 20 }}
+        />
+      </View>
+    );
+  }
+
   function renderItem({ item }) {
     return (
       <TouchableOpacity
@@ -55,6 +83,7 @@ function ShopList({ route, navigation }) {
         style={{ width: "100%" }}
         data={SAMPLE_SHOPS}
         renderItem={renderItem}
+        ListHeaderComponent={renderHeader}
       />
     </View>
   );
@@ -68,6 +97,7 @@ export default function ShopListScreen({ route, navigation }) {
     title: hawkerName,
     address: hawkerAddress,
   } = route.params;
+
   // useEffect(() => {
   //   firebase.auth().onAuthStateChanged((user) => {
   //     if (user) {

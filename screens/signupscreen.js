@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,18 +12,15 @@ import {
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import firebase from "../database/firebaseDB";
+const db = firebase.firestore().collection("userinfo");
 
-
-
-export default function signupscreen({ navigation ,route}) {
-  const db = firebase.firestore().collection("userinfo");
+export default function signupscreen({ navigation, route }) {
   //const auth = firebase.auth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
   const [user, setUser] = useState("");
   const [status, setStatus] = useState("");
-
 
   // useEffect(()=>{
   //   if(errorText){
@@ -35,7 +32,7 @@ export default function signupscreen({ navigation ,route}) {
   //   };
   //   db.add(newData);
   //   }
-    
+
   // },[]);
 
   // useEffect(() => {
@@ -49,10 +46,10 @@ export default function signupscreen({ navigation ,route}) {
   //     //setNotes(updatedNotes);
   //   });
 
-//     return () => {
-//       unsubscribe();
-//     };
-// }, []);
+  //     return () => {
+  //       unsubscribe();
+  //     };
+  // }, []);
 
   async function signup() {
     Keyboard.dismiss();
@@ -63,19 +60,20 @@ export default function signupscreen({ navigation ,route}) {
     } else {
       const userCredential = await firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(registeredUser => {
-          db.add(
-            {
-              user:user,
-              status: status,
-              id: registeredUser.user.uid,
-            }
-          )
+        .createUserWithEmailAndPassword(email, password);
+
+      if (userCredential) {
+        // the userCredential is a variable that will hold the response in it, it contains all the user info in it
+        // Signed in
+        // This user variable contains all the info related to user including its id
+        db.doc(userCredential.user.uid).set({
+          user: user,
+          email: email,
+          status: status,
         });
-      console.log(userCredential);
+      }
+
       setErrorText(`Sign up successful ${user}, head back to login page`);
-      
     }
   }
 
@@ -113,21 +111,22 @@ export default function signupscreen({ navigation ,route}) {
           value={password}
           onChangeText={(input) => setPassword(input)}
         />
-      <RNPickerSelect
-                 onValueChange={(value) => setStatus(value)}
-                 items={[
-                     { label: "Donor", value: "Donor" },
-                     { label: "Donatee", value: "Donatee" },
-                 
-                 ]}
-             />
+        <RNPickerSelect
+          onValueChange={(value) => setStatus(value)}
+          items={[
+            { label: "Donor", value: "Donor" },
+            { label: "Donatee", value: "Donatee" },
+          ]}
+        />
         <TouchableOpacity onPress={signup} style={styles.signupbutton}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{errorText}</Text>
         <Text
           style={styles.loginText}
-          onPress={() => {navigation.navigate("Login")}}
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
         >
           Already Registered? Click here to login
         </Text>
