@@ -25,18 +25,18 @@ export default function signupscreen({ navigation ,route}) {
   const [status, setStatus] = useState("");
 
 
-  useEffect(()=>{
-    if(errorText){
-      const newData = {
-      email: email,
-      user:user,
-      status: status,
-      id: user.length.toString(),
-    };
-    db.add(newData);
-    }
+  // useEffect(()=>{
+  //   if(errorText){
+  //     const newData = {
+  //     email: email,
+  //     user:user,
+  //     status: status,
+  //     id: user.length.toString(),
+  //   };
+  //   db.add(newData);
+  //   }
     
-  },[]);
+  // },[]);
 
   // useEffect(() => {
   //   const unsubscribe = db.onSnapshot((collection)=>{
@@ -63,7 +63,16 @@ export default function signupscreen({ navigation ,route}) {
     } else {
       const userCredential = await firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password);
+        .createUserWithEmailAndPassword(email, password)
+        .then(registeredUser => {
+          db.add(
+            {
+              user:user,
+              status: status,
+              id: registeredUser.user.uid,
+            }
+          )
+        });
       console.log(userCredential);
       setErrorText(`Sign up successful ${user}, head back to login page`);
       
