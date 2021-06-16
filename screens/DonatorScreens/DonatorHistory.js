@@ -75,7 +75,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     {item.items.map((dish) => (
       <Text style={[styles.dish, textColor]}>{dish.name},</Text>
     ))}
-    <Text style={[styles.price, textColor]}>{item.totalPrice}</Text>
+    {/* <Text style={[styles.price, textColor]}>{item.totalPrice}</Text> */}
     <Text style={[styles.claimdate, textColor]}>{item.date}</Text>
   </View>
 );
@@ -107,16 +107,11 @@ export default function DonatorHistory() {
   useEffect(() => {
     const unsubscribe = historyDB.onSnapshot((collection) => {
       const orders = collection.docs.map((doc) => {
-        const { hawkerId, shopId, items } = doc.data();
-
-       
+        // const { hawkerId, shopId, items } = doc.data();
 
         return {
           date: doc.id,
-          hawkerName: hawkerName,
-          shopName: shopName,
-          items: items,
-          totalPrice: 0,
+          ...doc.data(),
         };
       });
 

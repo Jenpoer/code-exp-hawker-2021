@@ -72,7 +72,7 @@ export default function DonatorCartReviewScreen({ route, navigation }) {
     if (cartData.length != 0) {
       db2
         .doc(currentDate)
-        .set({ hawkerId: hawkerId, shopId: shopId, items: cartData });
+        .set({ hawkerId: hawkerId, shopId: shopId, hawkerName: hawkerName, shopName: shopName, items: cartData });
     }
 
     // Add to "available" field
