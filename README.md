@@ -34,6 +34,6 @@ Through the platform, hawker centres may also enjoy higher profits and greater f
 - Persistence: Firebase Firestore
 - Authentication: Firebase Authentication
 
-- Feature of interest: Two versions of the interfac depending on user account type: benefactor or beneficiary
+- Feature of interest: Two versions of the user interface depending on user account type: benefactor or beneficiary
 
 ### For more info, please view our slide deck!
