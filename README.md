@@ -3,7 +3,7 @@
 ### Team : Cat02Team20 - C How
 
 ## Members
-- Abiya Immaculate Arul Dass
+- Arul Dass Abiya Immaculate 
 - Sarah Ann Hogan
 - Chua Pei Wen Regina
 - Jennifer Poernomo
